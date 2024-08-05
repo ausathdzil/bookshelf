@@ -16,16 +16,12 @@ function SignOut() {
 
 export default async function Home() {
   const session = await auth();
-  const userId = session?.user?.id;
 
-  if (session) {
+  if (!session) {
     return (
       <>
         <h1>Home</h1>
-        <p>Signed in as {session?.user?.email}</p>
-        <pre>{JSON.stringify(session, null, 2)}</pre>
-        <Link href={`/dashboard/${userId}`}>Dashboard</Link>
-        <SignOut />
+        <Link href="/signin">Sign In</Link>
       </>
     );
   }
@@ -33,7 +29,9 @@ export default async function Home() {
   return (
     <>
       <h1>Home</h1>
-      <Link href="/signin">Sign In</Link>
+      <p>Signed in as {session.user?.email}</p>
+      <Link href={`/${session?.user?.id}/dashboard`}>Dashboard</Link>
+      <SignOut />
     </>
   );
 }
