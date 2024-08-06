@@ -1,8 +1,10 @@
 import { providerMap, signIn } from '@/auth';
+import { Button } from '@/components/ui/button';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
+  console.log(providerMap);
   return (
     <div className="flex flex-col gap-2">
       {Object.values(providerMap).map((provider) => (
@@ -21,9 +23,12 @@ export default async function Page() {
             }
           }}
         >
-          <button type="submit">
-            <span>Sign in with {provider.name}</span>
-          </button>
+          <Button
+            variant="outline"
+            type="submit"
+          >
+            Sign in with {provider.name}
+          </Button>
         </form>
       ))}
     </div>
