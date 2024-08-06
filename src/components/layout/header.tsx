@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
+import { LibraryBigIcon } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function Header() {
@@ -20,7 +21,13 @@ export default async function Header() {
     <header>
       <nav className="flex justify-between items-center py-4 px-72">
         <Link href="/">
-          <Button variant="link">Bookshelf</Button>
+          <Button
+            className="space-x-2"
+            variant="link"
+          >
+            <LibraryBigIcon />
+            <span>Bookshelf</span>
+          </Button>
         </Link>
         <ul className="flex items-center gap-4">
           {session ? (
