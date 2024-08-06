@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <>
-      <section className="flex items-start gap-8">
+      <section className="flex gap-8">
         <LibraryBig className="w-24 h-24" />
         <div className="flex flex-col item-start text-xl gap-2">
           <h1 className="text-3xl font-bold">Welcome to Bookshelf</h1>

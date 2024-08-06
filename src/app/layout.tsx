@@ -1,3 +1,4 @@
+import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -26,9 +27,10 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased`}>
         <Header />
-        <main className="flex flex-col items-center py-10 gap-10">
+        <main className="flex flex-col justify-center items-center py-10 gap-10 min-h-[calc(100vh-160px)]">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
