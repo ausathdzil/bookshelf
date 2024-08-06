@@ -1,10 +1,10 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Manrope } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const manrope = Manrope({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Bookshelf',
@@ -25,7 +25,7 @@ export default function RootLayout({
           sizes="any"
         />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${manrope.className} antialiased`}>
         <Header />
         <main className="flex flex-col justify-center items-center py-10 gap-10 min-h-[calc(100vh-160px)]">
           {children}
