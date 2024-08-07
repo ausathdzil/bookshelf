@@ -34,7 +34,7 @@ export default async function Header() {
             <>
               <li>
                 <Link href={`/${session.user?.id}/dashboard`}>
-                  <Button variant="ghost">Dashboard</Button>
+                  <Button variant="secondary">Dashboard</Button>
                 </Link>
               </li>
               <DropdownMenu>
@@ -67,7 +67,7 @@ export default async function Header() {
           ) : (
             <li>
               <Link href="/signin">
-                <Button>Sign In</Button>
+                <Button variant="outline">Sign In</Button>
               </Link>
             </li>
           )}

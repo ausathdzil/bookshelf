@@ -84,3 +84,28 @@ export const authenticators = pgTable(
     }),
   })
 );
+
+export const books = pgTable('book', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  title: text('title').notNull(),
+  author: text('author'),
+  genre: text('genre'),
+  pages: integer('pages'),
+  pagesRead: integer('pages_read'),
+  status: text('status'),
+  tags: text('tags'),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at')
+    .notNull()
+    .$onUpdate(() => new Date()),
+});
+
+export type SelectUser = typeof users.$inferSelect;
+
+export type InsertBook = typeof books.$inferInsert;
+export type SelectBook = typeof books.$inferSelect;

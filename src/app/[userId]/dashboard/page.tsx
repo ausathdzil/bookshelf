@@ -1,12 +1,21 @@
-import { auth } from '@/auth';
+import { getBooksByUserId } from '@/queries/select';
 
-export default async function Page() {
-  const session = await auth();
+export default async function Page({ params }: { params: { userId: string } }) {
+  const books = await getBooksByUserId(params.userId);
 
   return (
     <>
-      <h1>Dashboard</h1>
-      <p>Welcome, {session?.user?.name}!</p>
+      {books.length === 0 ? (
+        <p>No books found</p>
+      ) : (
+        <ul>
+          {books.map((book) => (
+            <li key={book.id}>
+              <p>{book.title}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }
