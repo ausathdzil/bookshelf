@@ -22,23 +22,20 @@ export default async function Layout({
               <AvatarImage src={user?.image as string} />
               <AvatarFallback>{user?.name?.[0]}</AvatarFallback>
             </Avatar>
-            <div className="text-center">
-              <h2 className="text-lg font-bold">{user?.name}</h2>
+            <div className="text-center space-y-2">
+              <p className="font-bold">{user?.name}</p>
               <p>{user?.email}</p>
             </div>
-            {books.length > 0 && (
-              <>
-                <p>Recently Added</p>
-                {books
-                  .slice(0, 5)
-                  .reverse()
-                  .map((book) => (
-                    <ul key={book.id}>
-                      <li>{book.title}</li>
-                    </ul>
+            <h2 className="font-bold">Recent Books</h2>
+            <ul className='text-sm space-y-2'>
+              {books.length > 0 && (
+                <>
+                  {books.map((book) => (
+                    <li key={book.id}>{book.title}</li>
                   ))}
-              </>
-            )}
+                </>
+              )}
+            </ul>
           </div>
           <Overview userId={user?.id as string} />
         </div>

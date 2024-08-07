@@ -10,8 +10,8 @@ export default async function Overview({ userId }: { userId: string }) {
   }
 
   return (
-    <div className="w-full flex gap-4">
-      <ul className="w-1/2">
+    <div className="w-full flex gap-6">
+      <ul className="w-1/2 space-y-6">
         {books.slice(0, 2).map((book) => (
           <li key={book.id}>
             <BookCard book={book} />
