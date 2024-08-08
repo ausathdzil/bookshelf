@@ -12,9 +12,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+import { Separator } from '@/components/ui/separator';
 import { SelectBook } from '@/schema';
 import { Label, Pie, PieChart } from 'recharts';
-import { Separator } from '../ui/separator';
 
 export default function BookChart({ books }: { books: SelectBook[] }) {
   const totalBooks = books.length;

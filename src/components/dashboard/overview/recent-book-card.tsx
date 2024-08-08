@@ -8,8 +8,9 @@ import {
 } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { SelectBook } from '@/schema';
+import { StarIcon } from 'lucide-react';
 
-export default function BookCard({ book }: { book: SelectBook }) {
+export default function RecentBookCard({ book }: { book: SelectBook }) {
   return (
     <Card key={book.title}>
       <CardHeader>
@@ -46,8 +47,8 @@ export default function BookCard({ book }: { book: SelectBook }) {
             / {book.pages}
           </p>
         </div>
-        {/* <div className="flex gap-2">
-          {Array.from({ length: book.rating }).map((_, index) => (
+        <div className="flex gap-2">
+          {Array.from({ length: book.rating ?? 0 }).map((_, index) => (
             <StarIcon
               key={index}
               className="w-4 h-4"
@@ -55,7 +56,7 @@ export default function BookCard({ book }: { book: SelectBook }) {
               fill="orange"
             />
           ))}
-        </div> */}
+        </div>
       </CardFooter>
     </Card>
   );

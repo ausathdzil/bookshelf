@@ -1,4 +1,5 @@
-import { providerMap, signIn } from '@/auth';
+import { signIn } from '@/auth';
+import { GitHubIcon, GoogleIcon } from '@/components/icons/icons';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,6 +11,19 @@ import {
 import { LibraryBig } from 'lucide-react';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation';
+
+const providers = [
+  {
+    id: 'google',
+    name: 'Google',
+    icon: GoogleIcon,
+  },
+  {
+    id: 'github',
+    name: 'GitHub',
+    icon: GitHubIcon,
+  },
+];
 
 export default async function Page() {
   return (
@@ -23,7 +37,7 @@ export default async function Page() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {Object.values(providerMap).map((provider) => (
+          {providers.map((provider) => (
             <form
               key={provider.id}
               className="w-full"
@@ -43,9 +57,10 @@ export default async function Page() {
               <Button
                 variant="outline"
                 type="submit"
-                className="w-full"
+                className="w-full flex items-center justify-center gap-2"
               >
-                Sign in with {provider.name}
+                <provider.icon />
+                <span>Sign in with {provider.name}</span>
               </Button>
             </form>
           ))}

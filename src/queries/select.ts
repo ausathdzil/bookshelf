@@ -16,14 +16,18 @@ export async function getUserById(id: SelectUser['id']): Promise<
 
 export async function getBooksByUserId(userId: SelectBook['userId']): Promise<
   Array<{
-    title: string;
     id: string;
+    title: string;
     author: string | null;
     genre: string | null;
+    description: string | null;
+    volume: number | null;
+    volumeCompleted: number | null;
     pages: number | null;
     pagesRead: number | null;
     status: string | null;
-    tags: string | null;
+    rating: number | null;
+    image: string | null;
     userId: string;
     createdAt: Date;
     updatedAt: Date;

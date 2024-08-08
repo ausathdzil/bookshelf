@@ -10,7 +10,7 @@ export default async function Home() {
     <>
       <section className="flex gap-8">
         <LibraryBig className="w-24 h-24" />
-        <div className="flex flex-col item-start text-xl gap-2">
+        <article className="flex flex-col item-start text-xl gap-2">
           <h1 className="text-3xl font-bold">Welcome to Bookshelf</h1>
           <p>
             Keep track of your books and never forget what you&apos;ve read.
@@ -23,7 +23,7 @@ export default async function Home() {
               to get started.
             </p>
           )}
-        </div>
+        </article>
       </section>
       <DashboardExample />
     </>

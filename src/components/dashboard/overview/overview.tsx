@@ -1,6 +1,6 @@
+import BookChart from '@/components/dashboard/overview/book-chart';
+import RecentBookCard from '@/components/dashboard/overview/recent-book-card';
 import { getBooksByUserId } from '@/queries/select';
-import BookCard from '@/components/dashboard/book-card';
-import BookChart from '@/components/dashboard/book-chart';
 
 export default async function Overview({ userId }: { userId: string }) {
   const books = await getBooksByUserId(userId);
@@ -14,7 +14,7 @@ export default async function Overview({ userId }: { userId: string }) {
       <ul className="w-1/2 space-y-6">
         {books.slice(0, 2).map((book) => (
           <li key={book.id}>
-            <BookCard book={book} />
+            <RecentBookCard book={book} />
           </li>
         ))}
       </ul>
