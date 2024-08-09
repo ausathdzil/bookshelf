@@ -58,7 +58,7 @@ export default async function Header() {
                     </span>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <SignOut />
                   </DropdownMenuItem>
                 </DropdownMenuContent>

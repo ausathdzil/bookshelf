@@ -24,7 +24,7 @@ export default function BookCard({ book }: { book: SelectBook }) {
       </CardHeader>
       <CardContent>
         <p>
-          Volume: {book.volume} / {book.volumeCompleted}
+          Volume: {book.volumesCompleted} / {book.volumes}
         </p>
         <p>
           Pages: {book.pagesRead} / {book.pages}

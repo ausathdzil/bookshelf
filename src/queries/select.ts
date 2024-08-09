@@ -21,13 +21,12 @@ export async function getBooksByUserId(userId: SelectBook['userId']): Promise<
     author: string | null;
     genre: string | null;
     description: string | null;
-    volume: number | null;
-    volumeCompleted: number | null;
+    volumes: number | null;
+    volumesCompleted: number | null;
     pages: number | null;
     pagesRead: number | null;
     status: string | null;
     rating: number | null;
-    image: string | null;
     userId: string;
     createdAt: Date;
     updatedAt: Date;

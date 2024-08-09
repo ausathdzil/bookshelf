@@ -21,7 +21,12 @@ export default async function Page() {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/${user?.id}/dashboard`}>Dashboard</Link>
+              <Link
+                className="text-foreground"
+                href={`/${user?.id}/dashboard`}
+              >
+                Dashboard
+              </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>

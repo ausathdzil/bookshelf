@@ -2,12 +2,13 @@ import Overview from '@/components/dashboard/overview/overview';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { SelectBook } from '@/schema';
+import { User } from 'next-auth';
 
 export default function ProfileSection({
   user,
   books,
 }: {
-  user: any;
+  user: User | undefined;
   books: SelectBook[];
 }) {
   return (

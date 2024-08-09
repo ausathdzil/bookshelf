@@ -93,13 +93,12 @@ export const books = pgTable('book', {
   author: text('author'),
   genre: text('genre'),
   description: text('description'),
-  volume: integer('volume'),
-  volumeCompleted: integer('volume_completed'),
+  volumes: integer('volumes'),
+  volumesCompleted: integer('volumes_completed'),
   pages: integer('pages'),
   pagesRead: integer('pages_read'),
   status: text('status'),
   rating: integer('rating'),
-  image: text('image'),
   userId: text('userId')
     .notNull()
     .references(() => users.id),
