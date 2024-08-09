@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { SelectBook } from '@/schema';
 import { User } from 'next-auth';
+import Link from 'next/link';
 
 export default function ProfileSection({
   user,
@@ -25,16 +26,23 @@ export default function ProfileSection({
             <p className="font-bold">{user?.name}</p>
             <p>{user?.email}</p>
           </div>
-          <h2 className="font-bold">Recent Books</h2>
-          <ul className="text-sm space-y-2 list-disc">
-            {books.length > 0 && (
-              <>
-                {books.slice(0, 6).map((book) => (
-                  <li key={book.id}>{book.title}</li>
+          {books.length > 0 && (
+            <>
+              <h2 className="font-bold">Recent Books</h2>
+              <ul className="text-sm space-y-2 list-disc">
+                {books.slice(0, 7).map((book) => (
+                  <li key={book.id}>
+                    <Link
+                      className="hover:underline"
+                      href={`/${user?.id}/dashboard/books/${book.id}`}
+                    >
+                      {book.title}
+                    </Link>
+                  </li>
                 ))}
-              </>
-            )}
-          </ul>
+              </ul>
+            </>
+          )}
         </div>
         <Overview userId={user?.id as string} />
       </div>

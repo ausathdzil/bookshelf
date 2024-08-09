@@ -13,7 +13,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { createBook } from '@/queries/insert';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -37,7 +36,6 @@ const CreateBookFormSchema = z.object({
 });
 
 export default function CreateBookForm({ userId }: { userId: string }) {
-  const router = useRouter();
   const form = useForm<z.infer<typeof CreateBookFormSchema>>({
     resolver: zodResolver(CreateBookFormSchema),
     defaultValues: {
@@ -45,12 +43,12 @@ export default function CreateBookForm({ userId }: { userId: string }) {
       author: '',
       genre: '',
       description: '',
-      volumes: '1',
-      volumesCompleted: '1',
-      pages: '1',
-      pagesRead: '1',
+      volumes: '0',
+      volumesCompleted: '0',
+      pages: '0',
+      pagesRead: '0',
       status: 'Reading',
-      rating: '1',
+      rating: '0',
       userId: userId,
     },
   });
