@@ -22,23 +22,13 @@ export default async function Page({
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link
-                className="text-foreground"
-                href={`/${params.userId}/dashboard`}
-              >
-                Dashboard
-              </Link>
+              <Link href={`/${params.userId}/dashboard`}>Dashboard</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link
-                className="text-foreground"
-                href={`/${params.userId}/dashboard/books`}
-              >
-                Books
-              </Link>
+              <Link href={`/${params.userId}/dashboard/books`}>Books</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
