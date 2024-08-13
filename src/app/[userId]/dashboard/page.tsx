@@ -10,7 +10,7 @@ import {
 import { getBooksByUserId } from '@/queries/select';
 import Link from 'next/link';
 
-export default async function Page() {
+export default async function Page({ params }: { params: { userId: string } }) {
   const session = await auth();
   const user = session?.user;
   const books = user ? await getBooksByUserId(user.id as string) : [];

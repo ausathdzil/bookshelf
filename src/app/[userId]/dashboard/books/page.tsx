@@ -13,7 +13,7 @@ export default function Page({ params }: { params: { userId: string } }) {
   const userId = params.userId;
 
   return (
-    <section className="w-full px-44">
+    <section className="w-full flex flex-col justify-center items-start gap-4 px-44">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
