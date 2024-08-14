@@ -10,7 +10,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { deleteBook } from '@/queries/delete';
 import { ColumnDef } from '@tanstack/react-table';
-import { EyeIcon, MoreHorizontal, PencilIcon, Trash2Icon } from 'lucide-react';
+import {
+  EyeIcon,
+  MoreHorizontal,
+  PencilIcon,
+  Trash2Icon,
+  ArrowUpDown,
+} from 'lucide-react';
 import Link from 'next/link';
 
 export type BookColumn = {
@@ -52,7 +58,22 @@ export const columns: ColumnDef<BookColumn>[] = [
   },
   {
     accessorKey: 'updatedAt',
-    header: 'Last Updated',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Last Updated
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="text-center font-medium">{row.original.updatedAt}</div>
+      );
+    },
   },
   {
     id: 'actions',
