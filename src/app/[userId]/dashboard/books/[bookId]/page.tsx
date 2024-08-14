@@ -5,7 +5,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { getBookById, getBooksByUserId } from '@/queries/select';
+import { getBookById } from '@/queries/select';
 import Link from 'next/link';
 
 export default async function Page({

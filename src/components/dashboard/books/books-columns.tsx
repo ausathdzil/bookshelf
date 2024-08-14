@@ -11,11 +11,11 @@ import {
 import { deleteBook } from '@/queries/delete';
 import { ColumnDef } from '@tanstack/react-table';
 import {
+  ArrowUpDown,
   EyeIcon,
   MoreHorizontal,
   PencilIcon,
   Trash2Icon,
-  ArrowUpDown,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -34,7 +34,17 @@ export type BookColumn = {
 export const columns: ColumnDef<BookColumn>[] = [
   {
     accessorKey: 'title',
-    header: 'Title',
+    header: ({ column }) => {
+      return (
+        <button
+          className="flex items-center hover:text-accent-foreground"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Title
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      );
+    },
   },
   {
     accessorKey: 'author',
@@ -60,18 +70,13 @@ export const columns: ColumnDef<BookColumn>[] = [
     accessorKey: 'updatedAt',
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
+        <button
+          className="flex items-center hover:text-accent-foreground"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Last Updated
           <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <div className="text-center font-medium">{row.original.updatedAt}</div>
+        </button>
       );
     },
   },
