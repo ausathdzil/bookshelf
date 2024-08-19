@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
-import { SelectBook } from '@/schema';
+import { SelectBook } from '@/db/schema';
 import { ArrowRight, PlusIcon } from 'lucide-react';
 import { User } from 'next-auth';
 import Link from 'next/link';
@@ -62,7 +62,7 @@ export default function BooksSection({
         </li>
       </ul>
       <div className="w-full text-right">
-        <Link href={`/${user?.id}/dashboard/books`}>
+        <Link href="dashboard/books">
           <Button
             className="text-lg"
             variant="link"

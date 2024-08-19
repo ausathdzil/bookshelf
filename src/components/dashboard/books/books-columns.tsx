@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { deleteBook } from '@/queries/delete';
+import { deleteBook } from '@/lib/actions';
 import { ColumnDef } from '@tanstack/react-table';
 import {
   ArrowUpDown,
@@ -100,7 +100,7 @@ export const columns: ColumnDef<BookColumn>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>
               <Link
-                href={`/${book.userId}/dashboard/books/${book.id}`}
+                href={`/dashboard/books/${book.id}`}
                 className="w-full flex justify-between gap-4"
               >
                 <span>View details</span>
@@ -109,7 +109,7 @@ export const columns: ColumnDef<BookColumn>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link
-                href={`/${book.userId}/dashboard/books/${book.id}/edit`}
+                href={`/dashboard/books/${book.id}/edit`}
                 className="w-full flex justify-between gap-4"
               >
                 <span>Edit book</span>
@@ -119,13 +119,7 @@ export const columns: ColumnDef<BookColumn>[] = [
             <DropdownMenuItem>
               <form
                 className="w-full"
-                action={async () => {
-                  try {
-                    await deleteBook(book.id, book.userId);
-                  } catch (error) {
-                    console.error(error);
-                  }
-                }}
+                action={deleteBook.bind(null, book.id)}
               >
                 <button
                   className="w-full flex justify-between gap-4"

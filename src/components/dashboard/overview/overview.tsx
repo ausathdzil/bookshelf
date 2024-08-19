@@ -1,6 +1,6 @@
 import BookChart from '@/components/dashboard/overview/book-chart';
 import RecentBookCard from '@/components/dashboard/overview/recent-book-card';
-import { getBooksByUserId } from '@/queries/select';
+import { getBooksByUserId } from '@/lib/data';
 
 export default async function Overview({ userId }: { userId: string }) {
   const books = await getBooksByUserId(userId);

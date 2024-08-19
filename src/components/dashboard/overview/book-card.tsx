@@ -5,13 +5,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { SelectBook } from '@/schema';
+import { SelectBook } from '@/db/schema';
 import clsx from 'clsx';
 import Link from 'next/link';
 
 export default function BookCard({ book }: { book: SelectBook }) {
   return (
-    <Link href={`/${book.userId}/dashboard/books/${book.id}`}>
+    <Link href={`/dashboard/books/${book.id}`}>
       <Card
         className={clsx(
           `w-52 h-72`,

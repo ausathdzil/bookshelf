@@ -1,8 +1,6 @@
-'use server';
-
 import { db } from '@/db';
-import { books, SelectBook, SelectUser, users } from '@/schema';
-import { and, desc, eq } from 'drizzle-orm';
+import { books, SelectBook, SelectUser, users } from '@/db/schema';
+import { and, desc, eq } from 'drizzle-orm/sql';
 
 export async function getUserById(id: SelectUser['id']): Promise<
   Array<{
@@ -16,19 +14,19 @@ export async function getUserById(id: SelectUser['id']): Promise<
   return db.select().from(users).where(eq(users.id, id));
 }
 
-export async function getBooksByUserId(userId: SelectBook['userId']): Promise<
+export async function getBooksByUserId(id: SelectBook['userId']): Promise<
   Array<{
     id: string;
     title: string;
-    author: string | null;
-    genre: string | null;
-    description: string | null;
-    volumes: number | null;
-    volumesCompleted: number | null;
-    pages: number | null;
-    pagesRead: number | null;
-    status: string | null;
-    rating: number | null;
+    author: string;
+    genre: string;
+    description: string;
+    volumes: number;
+    volumesCompleted: number;
+    pages: number;
+    pagesRead: number;
+    status: string;
+    rating: number;
     userId: string;
     createdAt: Date;
     updatedAt: Date;
@@ -37,7 +35,7 @@ export async function getBooksByUserId(userId: SelectBook['userId']): Promise<
   return db
     .select()
     .from(books)
-    .where(eq(books.userId, userId))
+    .where(eq(books.userId, id))
     .orderBy(desc(books.updatedAt));
 }
 

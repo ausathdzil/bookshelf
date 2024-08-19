@@ -1,8 +1,5 @@
 'use client';
 
-import * as React from 'react';
-import { Label, Pie, PieChart } from 'recharts';
-
 import {
   Card,
   CardContent,
@@ -16,6 +13,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+import * as React from 'react';
+import { Label, Pie, PieChart } from 'recharts';
 
 const chartData = [
   { status: 'reading', count: 9, fill: 'var(--color-reading)' },

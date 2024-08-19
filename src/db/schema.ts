@@ -85,20 +85,20 @@ export const authenticators = pgTable(
   })
 );
 
-export const books = pgTable('book', {
+export const books = pgTable('books', {
   id: text('id')
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   title: text('title').notNull(),
-  author: text('author'),
-  genre: text('genre'),
-  description: text('description'),
-  volumes: integer('volumes'),
-  volumesCompleted: integer('volumes_completed'),
-  pages: integer('pages'),
-  pagesRead: integer('pages_read'),
-  status: text('status'),
-  rating: integer('rating'),
+  author: text('author').notNull(),
+  genre: text('genre').notNull(),
+  description: text('description').notNull(),
+  volumes: integer('volumes').notNull(),
+  volumesCompleted: integer('volumes_completed').notNull(),
+  pages: integer('pages').notNull(),
+  pagesRead: integer('pages_read').notNull(),
+  status: text('status').notNull(),
+  rating: integer('rating').notNull(),
   userId: text('userId')
     .notNull()
     .references(() => users.id),

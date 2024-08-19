@@ -8,7 +8,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { getBooksByUserId } from '@/queries/select';
+import { getBooksByUserId } from '@/lib/data';
 import Link from 'next/link';
 
 export default async function Page() {
@@ -29,7 +29,7 @@ export default async function Page() {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/${user?.id}/dashboard`}>Dashboard</Link>
+              <Link href="/dashboard">Dashboard</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -37,7 +37,7 @@ export default async function Page() {
             <BreadcrumbLink asChild>
               <Link
                 className="text-foreground"
-                href={`/${user?.id}/dashboard/books`}
+                href="/dashboard/books"
               >
                 Books
               </Link>

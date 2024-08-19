@@ -7,7 +7,7 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
 } from '@/components/ui/breadcrumb';
-import { getBooksByUserId } from '@/queries/select';
+import { getBooksByUserId } from '@/lib/data';
 import Link from 'next/link';
 
 export default async function Page() {
@@ -23,7 +23,7 @@ export default async function Page() {
             <BreadcrumbLink asChild>
               <Link
                 className="text-foreground"
-                href={`/${user?.id}/dashboard`}
+                href="/dashboard"
               >
                 Dashboard
               </Link>

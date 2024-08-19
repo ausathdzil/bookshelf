@@ -1,7 +1,7 @@
 import Overview from '@/components/dashboard/overview/overview';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
-import { SelectBook } from '@/schema';
+import { SelectBook } from '@/db/schema';
 import { User } from 'next-auth';
 import Link from 'next/link';
 

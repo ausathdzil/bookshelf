@@ -16,6 +16,7 @@ import Link from 'next/link';
 
 export default async function Header() {
   const session = await auth();
+  const user = session?.user;
 
   return (
     <header>
@@ -33,7 +34,7 @@ export default async function Header() {
           {session ? (
             <>
               <li>
-                <Link href={`/${session.user?.id}/dashboard`}>
+                <Link href="/dashboard">
                   <Button variant="secondary">Dashboard</Button>
                 </Link>
               </li>
@@ -45,17 +46,15 @@ export default async function Header() {
                     className="overflow-hidden rounded-full"
                   >
                     <Avatar>
-                      <AvatarImage src={session.user?.image as string} />
-                      <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
+                      <AvatarImage src={user?.image as string} />
+                      <AvatarFallback>{user?.name?.[0]}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel className="flex flex-col">
-                    <span>{session.user?.name}</span>
-                    <span className="text-sm font-light">
-                      {session.user?.email}
-                    </span>
+                    <span>{user?.name}</span>
+                    <span className="text-sm font-light">{user?.email}</span>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>

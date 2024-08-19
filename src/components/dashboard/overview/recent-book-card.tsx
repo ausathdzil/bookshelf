@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { SelectBook } from '@/schema';
+import { SelectBook } from '@/db/schema';
 import { StarIcon } from 'lucide-react';
 
 export default function RecentBookCard({ book }: { book: SelectBook }) {

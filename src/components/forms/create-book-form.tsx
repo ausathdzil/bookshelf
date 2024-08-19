@@ -11,27 +11,17 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { createBook } from '@/queries/insert';
+import { createBook } from '@/lib/actions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const CreateBookFormSchema = z.object({
-  title: z
-    .string()
-    .min(1, {
-      message: 'Title is required',
-    })
-    .max(255),
-  author: z.string().max(255),
-  genre: z.string().max(255),
-  description: z.string().max(255),
+  title: z.string(),
+  author: z.string(),
+  genre: z.string(),
   volumes: z.string(),
-  volumesCompleted: z.string(),
   pages: z.string(),
-  pagesRead: z.string(),
-  status: z.string(),
-  rating: z.string(),
   userId: z.string(),
 });
 
@@ -42,13 +32,8 @@ export default function CreateBookForm({ userId }: { userId: string }) {
       title: '',
       author: '',
       genre: '',
-      description: '',
       volumes: '0',
-      volumesCompleted: '0',
       pages: '0',
-      pagesRead: '0',
-      status: 'Reading',
-      rating: '0',
       userId: userId,
     },
   });
@@ -58,13 +43,8 @@ export default function CreateBookForm({ userId }: { userId: string }) {
     formData.append('title', values.title);
     formData.append('author', values.author);
     formData.append('genre', values.genre);
-    formData.append('description', values.description);
     formData.append('volumes', values.volumes);
-    formData.append('volumesCompleted', values.volumesCompleted);
     formData.append('pages', values.pages);
-    formData.append('pagesRead', values.pagesRead);
-    formData.append('status', values.status);
-    formData.append('rating', values.rating);
     formData.append('userId', values.userId);
 
     try {

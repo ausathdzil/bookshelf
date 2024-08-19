@@ -13,7 +13,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { Separator } from '@/components/ui/separator';
-import { SelectBook } from '@/schema';
+import { SelectBook } from '@/db/schema';
 import { Label, Pie, PieChart } from 'recharts';
 
 export default function BookChart({ books }: { books: SelectBook[] }) {

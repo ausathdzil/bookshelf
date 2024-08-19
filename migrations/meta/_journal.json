@@ -15,6 +15,13 @@
       "when": 1724060923595,
       "tag": "0001_numerous_odin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724080484775,
+      "tag": "0002_redundant_red_hulk",
+      "breakpoints": true
     }
   ]
 }
