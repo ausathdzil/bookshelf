@@ -46,15 +46,15 @@ export async function getBookById(
   Array<{
     id: string;
     title: string;
-    author: string | null;
-    genre: string | null;
-    description: string | null;
-    volumes: number | null;
-    volumesCompleted: number | null;
-    pages: number | null;
-    pagesRead: number | null;
-    status: string | null;
-    rating: number | null;
+    author: string;
+    genre: string;
+    description: string;
+    volumes: number;
+    volumesCompleted: number;
+    pages: number;
+    pagesRead: number;
+    status: string;
+    rating: number;
     userId: string;
     createdAt: Date;
     updatedAt: Date;

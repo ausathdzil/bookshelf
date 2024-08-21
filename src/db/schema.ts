@@ -109,6 +109,4 @@ export const books = pgTable('books', {
 });
 
 export type SelectUser = typeof users.$inferSelect;
-
-export type InsertBook = typeof books.$inferInsert;
 export type SelectBook = typeof books.$inferSelect;

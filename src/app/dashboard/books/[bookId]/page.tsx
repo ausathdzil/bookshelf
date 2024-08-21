@@ -14,6 +14,8 @@ export default async function Page({ params }: { params: { bookId: string } }) {
   const user = session?.user;
   const book = await getBookById(params.bookId, user?.id as string);
 
+  console.log(book);
+
   return (
     <section className="w-full flex flex-col justify-center items-start gap-4 px-44">
       <Breadcrumb>
@@ -45,6 +47,14 @@ export default async function Page({ params }: { params: { bookId: string } }) {
       <div className="w-full space-y-1.5">
         <h1 className="text-2xl font-bold">{book[0].title}</h1>
         <p className="text-muted-foreground">{book[0].author}</p>
+        <p className="text-muted-foreground">{book[0].genre}</p>
+      </div>
+      <div>
+        <p>{book[0].description}</p>
+        <p>{book[0].volumesCompleted}</p>
+        <p>{book[0].pagesRead}</p>
+        <p>{book[0].status}</p>
+        <p>{book[0].rating}</p>
       </div>
     </section>
   );

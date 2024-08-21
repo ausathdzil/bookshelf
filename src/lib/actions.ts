@@ -1,9 +1,10 @@
 'use server';
 
 import { db } from '@/db';
-import { books, InsertBook } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { books } from '@/db/schema';
+import { and, eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const FormSchema = z.object({
@@ -13,7 +14,7 @@ const FormSchema = z.object({
   genre: z.string(),
   description: z.string(),
   volumes: z.coerce.number().int(),
-  volumesRead: z.coerce.number().int(),
+  volumesCompleted: z.coerce.number().int(),
   pages: z.coerce.number().int(),
   pagesRead: z.coerce.number().int(),
   status: z.enum(['Reading', 'Completed']),
@@ -27,9 +28,21 @@ const CreateBook = FormSchema.omit({
   id: true,
   description: true,
   pagesRead: true,
-  volumesRead: true,
+  volumesCompleted: true,
   rating: true,
   status: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+const UpdateBook = FormSchema.omit({
+  id: true,
+  title: true,
+  author: true,
+  genre: true,
+  volumes: true,
+  pages: true,
+  userId: true,
   createdAt: true,
   updatedAt: true,
 });
@@ -75,7 +88,7 @@ export async function createBook(formData: FormData) {
     userId,
     createdAt,
     updatedAt,
-  } as InsertBook;
+  };
 
   await db.insert(books).values(data);
 
@@ -85,4 +98,44 @@ export async function createBook(formData: FormData) {
 export async function deleteBook(id: string) {
   await db.delete(books).where(eq(books.id, id));
   revalidatePath(`/dashboard/books`);
+}
+
+export async function updateBook(
+  id: string,
+  userId: string,
+  formData: FormData
+) {
+  const validatedFields = UpdateBook.safeParse({
+    description: formData.get('description'),
+    volumesCompleted: formData.get('volumesCompleted'),
+    pagesRead: formData.get('pagesRead'),
+    status: formData.get('status'),
+    rating: formData.get('rating'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Book.',
+    };
+  }
+
+  const { description, volumesCompleted, pagesRead, status, rating } =
+    validatedFields.data;
+
+  const data = {
+    description,
+    volumesCompleted,
+    pagesRead,
+    status,
+    rating,
+  };
+
+  await db
+    .update(books)
+    .set(data)
+    .where(and(eq(books.id, id), eq(books.userId, userId)));
+
+  revalidatePath(`/dashboard/books/${id}`);
+  redirect(`/dashboard/books/${id}`);
 }

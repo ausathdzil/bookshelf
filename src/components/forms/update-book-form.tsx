@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -11,44 +10,52 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { createBook } from '@/lib/actions';
+import { Textarea } from '@/components/ui/textarea';
+import { SelectBook } from '@/db/schema';
+import { updateBook } from '@/lib/actions';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const CreateBookFormSchema = z.object({
-  title: z.string(),
-  author: z.string(),
-  genre: z.string(),
-  volumes: z.string(),
-  pages: z.string(),
-  userId: z.string(),
+const UpdateBookFormSchema = z.object({
+  description: z.string(),
+  volumesCompleted: z.string(),
+  pagesRead: z.string(),
+  status: z.string(),
+  rating: z.string(),
 });
 
-export default function CreateBookForm({ userId }: { userId: string }) {
-  const form = useForm<z.infer<typeof CreateBookFormSchema>>({
-    resolver: zodResolver(CreateBookFormSchema),
+export default function UpdateBookForm({
+  id,
+  userId,
+  book,
+}: {
+  id: string;
+  userId: string;
+  book: SelectBook;
+}) {
+  const form = useForm<z.infer<typeof UpdateBookFormSchema>>({
+    resolver: zodResolver(UpdateBookFormSchema),
     defaultValues: {
-      title: '',
-      author: '',
-      genre: '',
-      volumes: '0',
-      pages: '0',
-      userId: userId,
+      description: book.description,
+      volumesCompleted: book.volumesCompleted.toString(),
+      pagesRead: book.pagesRead.toString(),
+      status: book.status,
+      rating: book.rating.toString(),
     },
   });
 
-  async function onSubmit(values: z.infer<typeof CreateBookFormSchema>) {
+  async function onSubmit(values: z.infer<typeof UpdateBookFormSchema>) {
     const formData = new FormData();
-    formData.append('title', values.title);
-    formData.append('author', values.author);
-    formData.append('genre', values.genre);
-    formData.append('volumes', values.volumes);
-    formData.append('pages', values.pages);
-    formData.append('userId', values.userId);
+    formData.append('description', values.description);
+    formData.append('volumesCompleted', values.volumesCompleted);
+    formData.append('pagesRead', values.pagesRead);
+    formData.append('status', values.status);
+    formData.append('rating', values.rating);
 
-    await createBook(formData);
-    form.reset();
+    const updateBookWithId = updateBook.bind(null, id, userId);
+
+    await updateBookWithId(formData);
   }
 
   return (
@@ -59,13 +66,14 @@ export default function CreateBookForm({ userId }: { userId: string }) {
       >
         <FormField
           control={form.control}
-          name="title"
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Book title"
+                <Textarea
+                  className="resize-none"
+                  placeholder="Add a description"
                   {...field}
                 />
               </FormControl>
@@ -75,46 +83,30 @@ export default function CreateBookForm({ userId }: { userId: string }) {
         />
         <FormField
           control={form.control}
-          name="author"
+          name="volumesCompleted"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Author</FormLabel>
+              <FormLabel>Volumes Completed</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Book author"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="genre"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Genre</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Book genre"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="volumes"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Volumes</FormLabel>
-              <FormControl>
-                <Input
+                  placeholder={book.volumesCompleted.toString()}
                   type="number"
-                  placeholder="Book volumes"
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="pagesRead"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Pages Read</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={book.pagesRead.toString()}
+                  type="number"
                   {...field}
                 />
               </FormControl>
@@ -124,14 +116,13 @@ export default function CreateBookForm({ userId }: { userId: string }) {
         />
         <FormField
           control={form.control}
-          name="pages"
+          name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Pages</FormLabel>
+              <FormLabel>Status</FormLabel>
               <FormControl>
                 <Input
-                  type="number"
-                  placeholder="Book pages"
+                  placeholder={book.status}
                   {...field}
                 />
               </FormControl>
@@ -139,19 +130,24 @@ export default function CreateBookForm({ userId }: { userId: string }) {
             </FormItem>
           )}
         />
-        <div className="flex justify-between">
-          <Button type="submit">Submit</Button>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button
-                type="button"
-                variant="outline"
-              >
-                Cancel
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </div>
+        <FormField
+          control={form.control}
+          name="rating"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Rating</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={book.rating.toString()}
+                  type="number"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
