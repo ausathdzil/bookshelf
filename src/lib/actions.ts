@@ -47,14 +47,13 @@ const UpdateBook = FormSchema.omit({
   updatedAt: true,
 });
 
-export async function createBook(formData: FormData) {
+export async function createBook(userId: string, formData: FormData) {
   const validatedFields = CreateBook.safeParse({
     title: formData.get('title'),
     author: formData.get('author'),
     genre: formData.get('genre'),
     volumes: formData.get('volumes'),
     pages: formData.get('pages'),
-    userId: formData.get('userId'),
   });
 
   if (!validatedFields.success) {
@@ -64,7 +63,7 @@ export async function createBook(formData: FormData) {
     };
   }
 
-  const { title, author, genre, volumes, pages, userId } = validatedFields.data;
+  const { title, author, genre, volumes, pages } = validatedFields.data;
 
   const description = '';
   const pagesRead = 0;

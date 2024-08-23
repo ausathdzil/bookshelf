@@ -10,10 +10,18 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { SelectBook } from '@/db/schema';
 import { updateBook } from '@/lib/actions';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -34,6 +42,8 @@ export default function UpdateBookForm({
   userId: string;
   book: SelectBook;
 }) {
+  const [isPending, startTransition] = useTransition();
+  
   const form = useForm<z.infer<typeof UpdateBookFormSchema>>({
     resolver: zodResolver(UpdateBookFormSchema),
     defaultValues: {
@@ -55,7 +65,10 @@ export default function UpdateBookForm({
 
     const updateBookWithId = updateBook.bind(null, id, userId);
 
-    await updateBookWithId(formData);
+    startTransition(async () => {
+      await updateBookWithId(formData);
+      form.reset();
+    });
   }
 
   return (
@@ -120,12 +133,20 @@ export default function UpdateBookForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Status</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={book.status}
-                  {...field}
-                />
-              </FormControl>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder={book.status} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="Reading">Reading</SelectItem>
+                  <SelectItem value="Completed">Completed</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -136,18 +157,35 @@ export default function UpdateBookForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Rating</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={book.rating.toString()}
-                  type="number"
-                  {...field}
-                />
-              </FormControl>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder={book.rating === 0 ? 'Rate this book' : ''}
+                    />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="1">1 ⭐</SelectItem>
+                  <SelectItem value="2">2 ⭐</SelectItem>
+                  <SelectItem value="3">3 ⭐</SelectItem>
+                  <SelectItem value="4">4 ⭐</SelectItem>
+                  <SelectItem value="5">5 ⭐</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          disabled={isPending}
+          type="submit"
+        >
+          Submit
+        </Button>
       </form>
     </Form>
   );

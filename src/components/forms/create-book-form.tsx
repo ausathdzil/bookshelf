@@ -13,6 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { createBook } from '@/lib/actions';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -22,10 +23,11 @@ const CreateBookFormSchema = z.object({
   genre: z.string(),
   volumes: z.string(),
   pages: z.string(),
-  userId: z.string(),
 });
 
 export default function CreateBookForm({ userId }: { userId: string }) {
+  const [isPending, startTransition] = useTransition();
+  
   const form = useForm<z.infer<typeof CreateBookFormSchema>>({
     resolver: zodResolver(CreateBookFormSchema),
     defaultValues: {
@@ -34,7 +36,6 @@ export default function CreateBookForm({ userId }: { userId: string }) {
       genre: '',
       volumes: '0',
       pages: '0',
-      userId: userId,
     },
   });
 
@@ -45,10 +46,13 @@ export default function CreateBookForm({ userId }: { userId: string }) {
     formData.append('genre', values.genre);
     formData.append('volumes', values.volumes);
     formData.append('pages', values.pages);
-    formData.append('userId', values.userId);
 
-    await createBook(formData);
-    form.reset();
+    const createBookWithId = createBook.bind(null, userId);
+
+    startTransition(async () => {
+      await createBookWithId(formData);
+      form.reset();
+    });
   }
 
   return (
@@ -140,10 +144,16 @@ export default function CreateBookForm({ userId }: { userId: string }) {
           )}
         />
         <div className="flex justify-between">
-          <Button type="submit">Submit</Button>
+          <Button
+            disabled={isPending}
+            type="submit"
+          >
+            Submit
+          </Button>
           <DialogFooter>
             <DialogClose asChild>
               <Button
+                disabled={isPending}
                 type="button"
                 variant="outline"
               >
