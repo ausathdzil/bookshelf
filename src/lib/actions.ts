@@ -27,10 +27,11 @@ const FormSchema = z.object({
 const CreateBook = FormSchema.omit({
   id: true,
   description: true,
-  pagesRead: true,
   volumesCompleted: true,
-  rating: true,
+  pagesRead: true,
   status: true,
+  rating: true,
+  userId: true,
   createdAt: true,
   updatedAt: true,
 });
