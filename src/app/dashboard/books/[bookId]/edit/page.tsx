@@ -7,8 +7,10 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getBookById } from '@/lib/data';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default async function Page({ params }: { params: { bookId: string } }) {
   const session = await auth();
@@ -32,22 +34,30 @@ export default async function Page({ params }: { params: { bookId: string } }) {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href={`/dashboard/books/${params.bookId}`}>
-                {book[0].title}
-              </Link>
-            </BreadcrumbLink>
+            <Suspense
+              fallback={<Skeleton className="w-[70px] h-[20px] rounded-lg" />}
+            >
+              <BreadcrumbLink asChild>
+                <Link href={`/dashboard/books/${params.bookId}`}>
+                  {book[0].title}
+                </Link>
+              </BreadcrumbLink>
+            </Suspense>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link
-                className="text-foreground"
-                href={`/dashboard/books/${params.bookId}/edit`}
-              >
-                Edit
-              </Link>
-            </BreadcrumbLink>
+            <Suspense
+              fallback={<Skeleton className="w-[70px] h-[20px] rounded-lg" />}
+            >
+              <BreadcrumbLink asChild>
+                <Link
+                  className="text-foreground"
+                  href={`/dashboard/books/${params.bookId}/edit`}
+                >
+                  Edit
+                </Link>
+              </BreadcrumbLink>
+            </Suspense>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
