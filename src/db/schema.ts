@@ -5,6 +5,7 @@ import {
   text,
   primaryKey,
   integer,
+  pgEnum,
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from 'next-auth/adapters';
 
@@ -85,6 +86,8 @@ export const authenticators = pgTable(
   })
 );
 
+export const statusEnum = pgEnum('status', ['Reading', 'Completed']);
+
 export const books = pgTable('books', {
   id: text('id')
     .primaryKey()
@@ -97,7 +100,7 @@ export const books = pgTable('books', {
   volumesCompleted: integer('volumes_completed').notNull(),
   pages: integer('pages').notNull(),
   pagesRead: integer('pages_read').notNull(),
-  status: text('status').notNull(),
+  status: statusEnum('status').notNull(),
   rating: integer('rating').notNull(),
   userId: text('userId')
     .notNull()

@@ -18,24 +18,37 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const CreateBookFormSchema = z.object({
-  title: z.string(),
-  author: z.string(),
-  genre: z.string(),
-  volumes: z.string(),
-  pages: z.string(),
+  title: z
+    .string()
+    .min(1, {
+      message: 'Title is required',
+    })
+    .max(200, { message: 'Title should not exceed 200 characters' }),
+  author: z.string().min(1, {
+    message: 'Author is required',
+  }),
+  genre: z.string().min(1, {
+    message: 'Genre is required',
+  }),
+  volumes: z.coerce.number().int().gt(0, {
+    message: 'Volumes should at least be 1',
+  }),
+  pages: z.coerce.number().int().gt(0, {
+    message: 'Pages should at least be 1',
+  }),
 });
 
 export default function CreateBookForm({ userId }: { userId: string }) {
   const [isPending, startTransition] = useTransition();
-  
+
   const form = useForm<z.infer<typeof CreateBookFormSchema>>({
     resolver: zodResolver(CreateBookFormSchema),
     defaultValues: {
       title: '',
       author: '',
       genre: '',
-      volumes: '0',
-      pages: '0',
+      volumes: 0,
+      pages: 0,
     },
   });
 
@@ -44,8 +57,8 @@ export default function CreateBookForm({ userId }: { userId: string }) {
     formData.append('title', values.title);
     formData.append('author', values.author);
     formData.append('genre', values.genre);
-    formData.append('volumes', values.volumes);
-    formData.append('pages', values.pages);
+    formData.append('volumes', values.volumes.toString());
+    formData.append('pages', values.pages.toString());
 
     const createBookWithId = createBook.bind(null, userId);
 

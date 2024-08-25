@@ -26,11 +26,21 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const UpdateBookFormSchema = z.object({
-  description: z.string(),
-  volumesCompleted: z.string(),
-  pagesRead: z.string(),
-  status: z.string(),
-  rating: z.string(),
+  description: z
+    .string()
+    .max(500, { message: 'Description should not exceed 500 characters.' }),
+  volumesCompleted: z.coerce.number().gte(0, {
+    message: 'Volumes completed should at least be 0',
+  }),
+  pagesRead: z.coerce.number().gte(0, {
+    message: 'Pages read should at least be 0',
+  }),
+  status: z.enum(['Reading', 'Completed'], {
+    invalid_type_error: 'Please select book status',
+  }),
+  rating: z.coerce.number().gte(0, {
+    message: 'Rating should at least be 0',
+  }),
 });
 
 export default function UpdateBookForm({
@@ -43,25 +53,25 @@ export default function UpdateBookForm({
   book: SelectBook;
 }) {
   const [isPending, startTransition] = useTransition();
-  
+
   const form = useForm<z.infer<typeof UpdateBookFormSchema>>({
     resolver: zodResolver(UpdateBookFormSchema),
     defaultValues: {
       description: book.description,
-      volumesCompleted: book.volumesCompleted.toString(),
-      pagesRead: book.pagesRead.toString(),
+      volumesCompleted: book.volumesCompleted,
+      pagesRead: book.pagesRead,
       status: book.status,
-      rating: book.rating.toString(),
+      rating: book.rating,
     },
   });
 
   async function onSubmit(values: z.infer<typeof UpdateBookFormSchema>) {
     const formData = new FormData();
     formData.append('description', values.description);
-    formData.append('volumesCompleted', values.volumesCompleted);
-    formData.append('pagesRead', values.pagesRead);
+    formData.append('volumesCompleted', values.volumesCompleted.toString());
+    formData.append('pagesRead', values.pagesRead.toString());
     formData.append('status', values.status);
-    formData.append('rating', values.rating);
+    formData.append('rating', values.rating.toString());
 
     const updateBookWithId = updateBook.bind(null, id, userId);
 
@@ -159,13 +169,13 @@ export default function UpdateBookForm({
               <FormLabel>Rating</FormLabel>
               <Select
                 onValueChange={field.onChange}
-                defaultValue={field.value}
+                defaultValue={
+                  book.rating !== 0 ? field.value.toString() : undefined
+                }
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue
-                      placeholder={book.rating === 0 ? 'Rate this book' : ''}
-                    />
+                    <SelectValue placeholder="Rate this book" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

@@ -70,7 +70,7 @@ export async function createBook(userId: string, formData: FormData) {
   const pagesRead = 0;
   const volumesCompleted = 0;
   const rating = 0;
-  const status = 'Reading';
+  const status: 'Reading' | 'Completed' = 'Reading';
   const createdAt = new Date();
   const updatedAt = new Date();
 

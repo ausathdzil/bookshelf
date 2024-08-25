@@ -22,6 +22,13 @@
       "when": 1724080484775,
       "tag": "0002_redundant_red_hulk",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1724595359756,
+      "tag": "0003_aspiring_speedball",
+      "breakpoints": true
     }
   ]
 }
