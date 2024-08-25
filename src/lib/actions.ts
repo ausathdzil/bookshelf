@@ -90,14 +90,15 @@ export async function createBook(userId: string, formData: FormData) {
     updatedAt,
   };
 
-  await db.insert(books).values(data);
+  try {
+    await db.insert(books).values(data);
+  } catch (error) {
+    return {
+      message: 'Failed to Create Book.',
+    };
+  }
 
   revalidatePath(`/dashboard`);
-}
-
-export async function deleteBook(id: string) {
-  await db.delete(books).where(eq(books.id, id));
-  revalidatePath(`/dashboard/books`);
 }
 
 export async function updateBook(
@@ -131,11 +132,28 @@ export async function updateBook(
     rating,
   };
 
-  await db
-    .update(books)
-    .set(data)
-    .where(and(eq(books.id, id), eq(books.userId, userId)));
+  try {
+    await db
+      .update(books)
+      .set(data)
+      .where(and(eq(books.id, id), eq(books.userId, userId)));
+  } catch (error) {
+    return {
+      message: 'Failed to Update Book.',
+    };
+  }
 
   revalidatePath(`/dashboard/books/${id}`);
   redirect(`/dashboard/books/${id}`);
+}
+
+export async function deleteBook(id: string) {
+  try {
+    await db.delete(books).where(eq(books.id, id));
+    revalidatePath(`/dashboard/books`);
+  } catch (error) {
+    return {
+      message: 'Failed to Delete Book.',
+    };
+  }
 }

@@ -10,12 +10,17 @@ import {
 import { Skeleton } from '@/components/ui/skeleton';
 import { getBookById } from '@/lib/data';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default async function Page({ params }: { params: { bookId: string } }) {
   const session = await auth();
   const user = session?.user;
   const book = await getBookById(params.bookId, user?.id as string);
+
+  if (!book.length) {
+    return notFound();
+  }
 
   return (
     <section className="w-full flex flex-col justify-center items-start gap-4 px-44">

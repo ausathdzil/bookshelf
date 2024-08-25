@@ -32,11 +32,16 @@ export async function getBooksByUserId(id: SelectBook['userId']): Promise<
     updatedAt: Date;
   }>
 > {
-  return db
-    .select()
-    .from(books)
-    .where(eq(books.userId, id))
-    .orderBy(desc(books.updatedAt));
+  try {
+    return db
+      .select()
+      .from(books)
+      .where(eq(books.userId, id))
+      .orderBy(desc(books.updatedAt));
+  } catch (error) {
+    console.error('Database error:', error);
+    throw new Error('Failed to fetch books data');
+  }
 }
 
 export async function getBookById(
@@ -60,8 +65,13 @@ export async function getBookById(
     updatedAt: Date;
   }>
 > {
-  return db
-    .select()
-    .from(books)
-    .where(and(eq(books.id, id), eq(books.userId, userId)));
+  try {
+    return db
+      .select()
+      .from(books)
+      .where(and(eq(books.id, id), eq(books.userId, userId)));
+  } catch (error) {
+    console.error('Database error:', error);
+    throw new Error('Failed to fetch book data');
+  }
 }
