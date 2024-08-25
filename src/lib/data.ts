@@ -1,6 +1,6 @@
 import { db } from '@/db';
 import { books, SelectBook, SelectUser, users } from '@/db/schema';
-import { and, desc, eq } from 'drizzle-orm/sql';
+import { and, desc, eq } from 'drizzle-orm';
 
 export async function getUserById(id: SelectUser['id']): Promise<
   Array<{

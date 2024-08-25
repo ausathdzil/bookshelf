@@ -8,8 +8,10 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getBooksByUserId } from '@/lib/data';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default async function Page() {
   const session = await auth();
@@ -46,10 +48,12 @@ export default async function Page() {
         </BreadcrumbList>
       </Breadcrumb>
       <h1 className="text-3xl font-bold">{user?.name}&apos;s Bookshelf</h1>
-      <BooksTable
-        columns={columns}
-        data={formattedBooks}
-      />
+      <Suspense fallback={<Skeleton className="w-[1167px] h-[319px]" />}>
+        <BooksTable
+          columns={columns}
+          data={formattedBooks}
+        />
+      </Suspense>
     </section>
   );
 }

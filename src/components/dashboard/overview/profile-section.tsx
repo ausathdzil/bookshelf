@@ -13,40 +13,35 @@ export default function ProfileSection({
   books: SelectBook[];
 }) {
   return (
-    <>
-      <h1 className="text-3xl font-bold">Profile</h1>
-      <Separator />
-      <div className="w-full flex items-start gap-16">
-        <div className="flex flex-col items-center space-y-4">
-          <Avatar className="w-20 h-20">
-            <AvatarImage src={user?.image as string} />
-            <AvatarFallback>{user?.name?.[0]}</AvatarFallback>
-          </Avatar>
-          <div className="text-center space-y-2">
-            <p className="font-bold">{user?.name}</p>
-            <p>{user?.email}</p>
-          </div>
-          {books.length > 0 && (
-            <>
-              <h2 className="font-bold">Recent Books</h2>
-              <ul className="text-sm space-y-2 list-disc">
-                {books.slice(0, 7).map((book) => (
-                  <li key={book.id}>
-                    <Link
-                      className="hover:underline"
-                      href={`/${user?.id}/dashboard/books/${book.id}`}
-                    >
-                      {book.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+    <div className="w-full flex items-start gap-16">
+      <div className="flex flex-col items-center space-y-4">
+        <Avatar className="w-20 h-20">
+          <AvatarImage src={user?.image as string} />
+          <AvatarFallback>{user?.name?.[0]}</AvatarFallback>
+        </Avatar>
+        <div className="text-center space-y-2">
+          <p className="font-bold">{user?.name}</p>
+          <p>{user?.email}</p>
         </div>
-        <Overview userId={user?.id as string} />
+        {books.length > 0 && (
+          <>
+            <h2 className="font-bold">Recent Books</h2>
+            <ul className="text-sm space-y-2 list-disc">
+              {books.slice(0, 7).map((book) => (
+                <li key={book.id}>
+                  <Link
+                    className="hover:underline"
+                    href={`/${user?.id}/dashboard/books/${book.id}`}
+                  >
+                    {book.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
-      <Separator />
-    </>
+      <Overview userId={user?.id as string} />
+    </div>
   );
 }
