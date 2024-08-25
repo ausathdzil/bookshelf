@@ -25,7 +25,7 @@ export async function getBooksByUserId(id: SelectBook['userId']): Promise<
     volumesCompleted: number;
     pages: number;
     pagesRead: number;
-    status: string;
+    status: 'Reading' | 'Completed';
     rating: number;
     userId: string;
     createdAt: Date;
@@ -58,7 +58,7 @@ export async function getBookById(
     volumesCompleted: number;
     pages: number;
     pagesRead: number;
-    status: string;
+    status: 'Reading' | 'Completed';
     rating: number;
     userId: string;
     createdAt: Date;
