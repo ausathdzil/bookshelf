@@ -50,10 +50,8 @@ export default function BookDetails({ book }: { book: SelectBook }) {
         <p>{book.description}</p>
         <div className="w-1/2 flex gap-4">
           <Card className="w-full">
-            <CardHeader>
+            <CardHeader className="space-y-4">
               <CardTitle>Volumes</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
               <Progress
                 className={
                   book.status === 'Completed'
@@ -65,13 +63,11 @@ export default function BookDetails({ book }: { book: SelectBook }) {
               <p>
                 {book.volumesCompleted} / {book.volumes}
               </p>
-            </CardContent>
+            </CardHeader>
           </Card>
           <Card className="w-full">
-            <CardHeader>
+            <CardHeader className="space-y-4">
               <CardTitle>Pages</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
               <Progress
                 className={
                   book.status === 'Completed'
@@ -83,7 +79,7 @@ export default function BookDetails({ book }: { book: SelectBook }) {
               <p>
                 {book.pagesRead} / {book.pages}
               </p>
-            </CardContent>
+            </CardHeader>
           </Card>
         </div>
       </div>

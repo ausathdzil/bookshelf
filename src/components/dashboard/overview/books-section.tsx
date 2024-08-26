@@ -1,6 +1,5 @@
 import BookCard from '@/components/dashboard/overview/book-card';
 import CreateBookForm from '@/components/forms/create-book-form';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Dialog,
@@ -10,11 +9,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Separator } from '@/components/ui/separator';
 import { SelectBook } from '@/db/schema';
-import { ArrowRight, PlusIcon } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 import { User } from 'next-auth';
-import Link from 'next/link';
 
 export default function BooksSection({
   user,

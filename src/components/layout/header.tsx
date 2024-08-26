@@ -35,7 +35,7 @@ export default async function Header() {
             <>
               <li>
                 <Link href="/dashboard">
-                  <Button variant="secondary">Dashboard</Button>
+                  <Button variant='ghost'>Dashboard</Button>
                 </Link>
               </li>
               <DropdownMenu>

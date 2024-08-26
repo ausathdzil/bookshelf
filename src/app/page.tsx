@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
-import DashboardExample from '@/components/home/dashboard-example';
 import { LibraryBig } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function Home() {
@@ -15,17 +15,40 @@ export default async function Home() {
           <p>
             Keep track of your books and never forget what you&apos;ve read.
           </p>
-          {!session && (
-            <p className="text-base">
+        </article>
+      </section>
+      <section className="w-full flex justify-center items-start px-36 gap-8">
+        <div className="space-y-4">
+          <Image
+            src="/dashboard-example.png"
+            alt="Dashboard example"
+            width={1000}
+            height={400}
+            priority={true}
+            unoptimized={true}
+            className="rounded-lg border-2 border-gray-200"
+          />
+          <article className="text-center">
+            <h1 className="text-3xl font-bold">Never forget what you read.</h1>
+            <p>Keep track of you books by adding it to your bookshelf</p>
+          </article>
+          {!session ? (
+            <p className="text-base text-center">
               <span className="text-blue-500 hover:underline">
                 <Link href="/signin">Sign in</Link>
               </span>{' '}
               to get started.
             </p>
+          ) : (
+            <p className="text-base text-center">
+              <span className="text-blue-500 hover:underline">
+                <Link href="/dashboard">Go to dashboard</Link>
+              </span>{' '}
+              to get started.
+            </p>
           )}
-        </article>
+        </div>
       </section>
-      <DashboardExample />
     </>
   );
 }
