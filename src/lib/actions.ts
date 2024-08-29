@@ -183,9 +183,7 @@ export async function updateBookVolumesAndPages(
   const { volumesCompleted, pagesRead } = validatedFields.data;
 
   const status: 'Reading' | 'Completed' =
-    volumesCompleted === book.volumes
-      ? 'Completed'
-      : 'Reading' && pagesRead === book.pages
+    volumesCompleted === book.volumes && pagesRead === book.pages
       ? 'Completed'
       : 'Reading';
 
@@ -207,7 +205,6 @@ export async function updateBookVolumesAndPages(
   }
 
   revalidatePath(`/dashboard`);
-  redirect(`/dashboard`);
 }
 
 export async function deleteBook(id: string) {
