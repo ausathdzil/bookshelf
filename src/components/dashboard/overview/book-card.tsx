@@ -126,10 +126,9 @@ export default function BookCard({ book }: { book: SelectBook }) {
       </CardContent>
       <CardFooter>
         <UpdateCardForm
+          book={book}
           volumesCompleted={volumesCompleted}
           pagesRead={pagesRead}
-          id={book.id}
-          userId={book.userId}
         />
       </CardFooter>
     </Card>

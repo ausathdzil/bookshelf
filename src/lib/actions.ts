@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db';
-import { books } from '@/db/schema';
+import { books, SelectBook } from '@/db/schema';
 import { and, eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -163,6 +163,7 @@ export async function updateBook(
 }
 
 export async function updateBookVolumesAndPages(
+  book: SelectBook,
   id: string,
   userId: string,
   formData: FormData
@@ -181,9 +182,17 @@ export async function updateBookVolumesAndPages(
 
   const { volumesCompleted, pagesRead } = validatedFields.data;
 
+  const status: 'Reading' | 'Completed' =
+    volumesCompleted === book.volumes
+      ? 'Completed'
+      : 'Reading' && pagesRead === book.pages
+      ? 'Completed'
+      : 'Reading';
+
   const data = {
     volumesCompleted,
     pagesRead,
+    status,
   };
 
   try {
