@@ -25,7 +25,7 @@ export default async function Home() {
             width={1000}
             height={400}
             priority={true}
-            unoptimized={true}
+            quality={100}
             className="rounded-lg border-2 border-gray-200"
           />
           <article className="text-center">
