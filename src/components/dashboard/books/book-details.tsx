@@ -11,10 +11,12 @@ export default function BookDetails({ book }: { book: SelectBook }) {
   return (
     <>
       <div className="w-full flex justify-between items-start">
-        <article className="space-y-1">
-          <h1 className="text-2xl font-bold">{book.title}</h1>
-          <p className="text-muted-foreground">{book.author}</p>
-          <p className="text-muted-foreground">{book.genre}</p>
+        <div className="w-full space-y-4">
+          <article className="space-y-1">
+            <h1 className="text-2xl font-bold">{book.title}</h1>
+            <p className="text-muted-foreground">{book.author}</p>
+            <p className="text-muted-foreground">{book.genre}</p>
+          </article>
           <div className="space-x-2">
             <Badge
               className={clsx({
@@ -35,7 +37,7 @@ export default function BookDetails({ book }: { book: SelectBook }) {
               {book.rating === 0 ? 'Unrated' : `${book.rating} ⭐`}
             </Badge>
           </div>
-        </article>
+        </div>
         <Link href={`/dashboard/books/${book.id}/edit`}>
           <Button
             className="flex gap-4"

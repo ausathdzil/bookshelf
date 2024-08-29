@@ -1,6 +1,7 @@
 import { auth } from '@/auth';
 import BooksSection from '@/components/dashboard/overview/books-section';
 import ProfileSection from '@/components/dashboard/overview/profile-section';
+import CreateBookForm from '@/components/forms/create-book-form';
 import BooksSectionSkeleton from '@/components/skeletons/books-section-skeleton';
 import ProfileSectionSkeleton from '@/components/skeletons/profile-section-skeleton';
 import {
@@ -10,6 +11,14 @@ import {
   BreadcrumbList,
 } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { getBooksByUserId } from '@/lib/data';
 import { ArrowRight } from 'lucide-react';
@@ -57,7 +66,21 @@ export default async function Page() {
             books={books}
           />
         </Suspense>
-        <div className="w-full text-right">
+        <div className="w-full space-x-4 text-right">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>Add book</Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>Add book</DialogTitle>
+                <DialogDescription>
+                  Add a book to your bookshelf.
+                </DialogDescription>
+              </DialogHeader>
+              <CreateBookForm userId={user?.id as string} />
+            </DialogContent>
+          </Dialog>
           <Link href="dashboard/books">
             <Button
               className="text-lg"

@@ -4,10 +4,12 @@ export default function BookDetailsSkeleton() {
   return (
     <>
       <div className="w-full flex justify-between items-start">
-        <div className="flex flex-col space-y-1">
-          <Skeleton className="w-[309px] h-[32px] rounded-lg" />
-          <Skeleton className="w-[309px] h-[24px] rounded-lg" />
-          <Skeleton className="w-[309px] h-[24px] rounded-lg" />
+        <div className="w-full flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <Skeleton className="w-[309px] h-[32px] rounded-lg" />
+            <Skeleton className="w-[309px] h-[24px] rounded-lg" />
+            <Skeleton className="w-[309px] h-[24px] rounded-lg" />
+          </div>
           <Skeleton className="w-[150px] h-[24px] rounded-lg" />
         </div>
       </div>

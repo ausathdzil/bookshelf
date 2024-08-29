@@ -48,6 +48,21 @@ const UpdateBook = FormSchema.omit({
   updatedAt: true,
 });
 
+const UpdateBookPagesAndVolumes = FormSchema.omit({
+  id: true,
+  title: true,
+  author: true,
+  genre: true,
+  description: true,
+  volumes: true,
+  pages: true,
+  status: true,
+  rating: true,
+  userId: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export async function createBook(userId: string, formData: FormData) {
   const validatedFields = CreateBook.safeParse({
     title: formData.get('title'),
@@ -145,6 +160,45 @@ export async function updateBook(
 
   revalidatePath(`/dashboard/books/${id}`);
   redirect(`/dashboard/books/${id}`);
+}
+
+export async function updateBookVolumesAndPages(
+  id: string,
+  userId: string,
+  formData: FormData
+) {
+  const validatedFields = UpdateBookPagesAndVolumes.safeParse({
+    volumesCompleted: formData.get('volumesCompleted'),
+    pagesRead: formData.get('pagesRead'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Book.',
+    };
+  }
+
+  const { volumesCompleted, pagesRead } = validatedFields.data;
+
+  const data = {
+    volumesCompleted,
+    pagesRead,
+  };
+
+  try {
+    await db
+      .update(books)
+      .set(data)
+      .where(and(eq(books.id, id), eq(books.userId, userId)));
+  } catch (error) {
+    return {
+      message: 'Failed to Update Book.',
+    };
+  }
+
+  revalidatePath(`/dashboard`);
+  redirect(`/dashboard`);
 }
 
 export async function deleteBook(id: string) {

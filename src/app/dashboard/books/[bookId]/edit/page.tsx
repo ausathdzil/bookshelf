@@ -8,6 +8,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getBookById } from '@/lib/data';
 import Link from 'next/link';
@@ -67,10 +68,13 @@ export default async function Page({ params }: { params: { bookId: string } }) {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="w-full space-y-1.5">
-        <h1 className="text-2xl font-bold">{book[0].title}</h1>
-        <p className="text-muted-foreground">{book[0].author}</p>
-        <p className="text-muted-foreground">{book[0].genre}</p>
+      <div className="w-full space-y-4">
+        <article className="space-y-1">
+          <h1 className="text-2xl font-bold">{book[0].title}</h1>
+          <p className="text-muted-foreground">{book[0].author}</p>
+          <p className="text-muted-foreground">{book[0].genre}</p>
+        </article>
+        <Separator />
         <div className="flex w-full gap-8">
           <div className="w-1/2 space-y-4">
             <h1>Your Progress</h1>
