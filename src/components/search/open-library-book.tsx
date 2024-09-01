@@ -1,9 +1,6 @@
 import { auth } from '@/auth';
-import { fetchBookByISBN } from '@/lib/data';
-import Image from 'next/image';
-import Link from 'next/link';
-import CreateBookForm from '../forms/create-book-form';
-import { Button } from '../ui/button';
+import CreateBookForm from '@/components/forms/create-book-form';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -11,7 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
+} from '@/components/ui/dialog';
+import { fetchBookByISBN } from '@/lib/data';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function OpenLibraryBook({ query }: { query: string }) {
   const session = await auth();
@@ -22,13 +22,13 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
   return (
     <>
       {book && (
-        <div className="flex items-start gap-4">
-          <div className="relative w-[300px] h-[400px]">
+        <div className="flex items-start gap-6">
+          <div className="relative w-[300px] h-[500px]">
             {book.cover ? (
               <Image
                 src={book.cover.large}
                 alt={book.title}
-                className="rounded-md"
+                className="rounded-tr-sm rounded-br-sm"
                 fill
               />
             ) : (
@@ -40,7 +40,7 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
               </div>
             )}
           </div>
-          <div className='space-y-4'>
+          <div className="space-y-4">
             <article className="space-y-1 w-[300px]">
               <h1 className="text-lg font-bold">{book.title}</h1>
               <p className="text-base text-muted-foreground">
@@ -70,7 +70,7 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
                   <DialogHeader>
                     <DialogTitle>Add book</DialogTitle>
                     <DialogDescription>
-                      Add a book to your bookshelf.
+                      Add a {book.title} to your bookshelf.
                     </DialogDescription>
                   </DialogHeader>
                   <CreateBookForm

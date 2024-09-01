@@ -25,7 +25,6 @@ export type BookColumn = {
   author: string | null;
   genre: string | null;
   pagesProgress: string | null;
-  volumesProgress: string | null;
   status: string | null;
   updatedAt: string | null;
   userId: string;
@@ -57,10 +56,6 @@ export const columns: ColumnDef<BookColumn>[] = [
   {
     accessorKey: 'pagesProgress',
     header: 'Pages',
-  },
-  {
-    accessorKey: 'volumesProgress',
-    header: 'Volumes',
   },
   {
     accessorKey: 'status',

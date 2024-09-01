@@ -21,7 +21,6 @@ export default async function Page() {
   const formattedBooks = books.map((book) => ({
     ...book,
     pagesProgress: `${book.pagesRead} / ${book.pages}` || null,
-    volumesProgress: `${book.volumesCompleted} / ${book.volumes}` || null,
     updatedAt: book.updatedAt.toISOString().split('T')[0] || '',
   }));
 

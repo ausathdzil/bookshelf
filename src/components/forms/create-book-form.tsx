@@ -31,9 +31,6 @@ const CreateBookFormSchema = z.object({
   genre: z.string().min(1, {
     message: 'Genre is required',
   }),
-  volumes: z.coerce.number().int().gt(0, {
-    message: 'Volumes should at least be 1',
-  }),
   pages: z.coerce.number().int().gt(0, {
     message: 'Pages should at least be 1',
   }),
@@ -52,9 +49,13 @@ export default function CreateBookForm({
     resolver: zodResolver(CreateBookFormSchema),
     defaultValues: {
       title: OpenLibraryBook?.title || '',
-      author: OpenLibraryBook?.authors[0].name || '',
-      genre: OpenLibraryBook?.subjects[0].name || '',
-      volumes: 0,
+      author:
+        OpenLibraryBook?.authors.map((author) => author.name).join(', ') || '',
+      genre:
+        OpenLibraryBook?.subjects
+          .slice(0, 3)
+          .map((subject) => subject.name)
+          .join(', ') || '',
       pages: OpenLibraryBook?.number_of_pages || 0,
     },
   });
@@ -64,7 +65,6 @@ export default function CreateBookForm({
     formData.append('title', values.title);
     formData.append('author', values.author);
     formData.append('genre', values.genre);
-    formData.append('volumes', values.volumes.toString());
     formData.append('pages', values.pages.toString());
 
     const createBookWithId = createBook.bind(null, userId);
@@ -122,23 +122,6 @@ export default function CreateBookForm({
               <FormControl>
                 <Input
                   placeholder="Book genre"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="volumes"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Volumes</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Book volumes"
                   {...field}
                 />
               </FormControl>

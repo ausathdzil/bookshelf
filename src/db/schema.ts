@@ -1,11 +1,11 @@
 import {
   boolean,
-  timestamp,
-  pgTable,
-  text,
-  primaryKey,
   integer,
   pgEnum,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from 'next-auth/adapters';
 
@@ -96,8 +96,6 @@ export const books = pgTable('books', {
   author: text('author').notNull(),
   genre: text('genre').notNull(),
   description: text('description').notNull(),
-  volumes: integer('volumes').notNull(),
-  volumesCompleted: integer('volumes_completed').notNull(),
   pages: integer('pages').notNull(),
   pagesRead: integer('pages_read').notNull(),
   status: statusEnum('status').notNull(),
@@ -111,5 +109,4 @@ export const books = pgTable('books', {
     .$onUpdate(() => new Date()),
 });
 
-export type SelectUser = typeof users.$inferSelect;
 export type SelectBook = typeof books.$inferSelect;

@@ -29,6 +29,13 @@
       "when": 1724595359756,
       "tag": "0003_aspiring_speedball",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1725209562148,
+      "tag": "0004_condemned_arclight",
+      "breakpoints": true
     }
   ]
 }

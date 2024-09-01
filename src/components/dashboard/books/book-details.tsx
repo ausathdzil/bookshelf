@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { SelectBook } from '@/db/schema';
 import clsx from 'clsx';
@@ -51,22 +51,6 @@ export default function BookDetails({ book }: { book: SelectBook }) {
       <div className="w-full space-y-4">
         <p>{book.description}</p>
         <div className="w-1/2 flex gap-4">
-          <Card className="w-full">
-            <CardHeader className="space-y-4">
-              <CardTitle>Volumes</CardTitle>
-              <Progress
-                className={
-                  book.status === 'Completed'
-                    ? '[&>*]:bg-blue-500'
-                    : '[&>*]:bg-emerald-500'
-                }
-                value={(book.volumesCompleted / book.volumes) * 100}
-              />
-              <p>
-                {book.volumesCompleted} / {book.volumes}
-              </p>
-            </CardHeader>
-          </Card>
           <Card className="w-full">
             <CardHeader className="space-y-4">
               <CardTitle>Pages</CardTitle>

@@ -29,9 +29,6 @@ const UpdateBookFormSchema = z.object({
   description: z
     .string()
     .max(500, { message: 'Description should not exceed 500 characters.' }),
-  volumesCompleted: z.coerce.number().gte(0, {
-    message: 'Volumes completed should at least be 0',
-  }),
   pagesRead: z.coerce.number().gte(0, {
     message: 'Pages read should at least be 0',
   }),
@@ -58,7 +55,6 @@ export default function UpdateBookForm({
     resolver: zodResolver(UpdateBookFormSchema),
     defaultValues: {
       description: book.description,
-      volumesCompleted: book.volumesCompleted,
       pagesRead: book.pagesRead,
       status: book.status,
       rating: book.rating,
@@ -68,7 +64,6 @@ export default function UpdateBookForm({
   async function onSubmit(values: z.infer<typeof UpdateBookFormSchema>) {
     const formData = new FormData();
     formData.append('description', values.description);
-    formData.append('volumesCompleted', values.volumesCompleted.toString());
     formData.append('pagesRead', values.pagesRead.toString());
     formData.append('status', values.status);
     formData.append('rating', values.rating.toString());
@@ -101,22 +96,6 @@ export default function UpdateBookForm({
                 />
               </FormControl>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="volumesCompleted"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Volumes Completed</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={book.volumesCompleted.toString()}
-                  type="number"
-                  {...field}
-                />
-              </FormControl>
             </FormItem>
           )}
         />

@@ -13,8 +13,6 @@ const FormSchema = z.object({
   author: z.string(),
   genre: z.string(),
   description: z.string(),
-  volumes: z.coerce.number().int(),
-  volumesCompleted: z.coerce.number().int(),
   pages: z.coerce.number().int(),
   pagesRead: z.coerce.number().int(),
   status: z.enum(['Reading', 'Completed']),
@@ -27,7 +25,6 @@ const FormSchema = z.object({
 const CreateBook = FormSchema.omit({
   id: true,
   description: true,
-  volumesCompleted: true,
   pagesRead: true,
   status: true,
   rating: true,
@@ -41,20 +38,18 @@ const UpdateBook = FormSchema.omit({
   title: true,
   author: true,
   genre: true,
-  volumes: true,
   pages: true,
   userId: true,
   createdAt: true,
   updatedAt: true,
 });
 
-const UpdateBookPagesAndVolumes = FormSchema.omit({
+const UpdateBookPages = FormSchema.omit({
   id: true,
   title: true,
   author: true,
   genre: true,
   description: true,
-  volumes: true,
   pages: true,
   status: true,
   rating: true,
@@ -68,7 +63,6 @@ export async function createBook(userId: string, formData: FormData) {
     title: formData.get('title'),
     author: formData.get('author'),
     genre: formData.get('genre'),
-    volumes: formData.get('volumes'),
     pages: formData.get('pages'),
   });
 
@@ -79,11 +73,10 @@ export async function createBook(userId: string, formData: FormData) {
     };
   }
 
-  const { title, author, genre, volumes, pages } = validatedFields.data;
+  const { title, author, genre, pages } = validatedFields.data;
 
   const description = '';
   const pagesRead = 0;
-  const volumesCompleted = 0;
   const rating = 0;
   const status: 'Reading' | 'Completed' = 'Reading';
   const createdAt = new Date();
@@ -94,8 +87,6 @@ export async function createBook(userId: string, formData: FormData) {
     author,
     genre,
     description,
-    volumes,
-    volumesCompleted,
     pages,
     pagesRead,
     status,
@@ -124,7 +115,6 @@ export async function updateBook(
 ) {
   const validatedFields = UpdateBook.safeParse({
     description: formData.get('description'),
-    volumesCompleted: formData.get('volumesCompleted'),
     pagesRead: formData.get('pagesRead'),
     status: formData.get('status'),
     rating: formData.get('rating'),
@@ -137,12 +127,10 @@ export async function updateBook(
     };
   }
 
-  const { description, volumesCompleted, pagesRead, status, rating } =
-    validatedFields.data;
+  const { description, pagesRead, status, rating } = validatedFields.data;
 
   const data = {
     description,
-    volumesCompleted,
     pagesRead,
     status,
     rating,
@@ -163,14 +151,13 @@ export async function updateBook(
   redirect(`/dashboard/books/${id}`);
 }
 
-export async function updateBookVolumesAndPages(
+export async function updateBookPages(
   book: SelectBook,
   id: string,
   userId: string,
   formData: FormData
 ) {
-  const validatedFields = UpdateBookPagesAndVolumes.safeParse({
-    volumesCompleted: formData.get('volumesCompleted'),
+  const validatedFields = UpdateBookPages.safeParse({
     pagesRead: formData.get('pagesRead'),
   });
 
@@ -181,15 +168,12 @@ export async function updateBookVolumesAndPages(
     };
   }
 
-  const { volumesCompleted, pagesRead } = validatedFields.data;
+  const { pagesRead } = validatedFields.data;
 
   const status: 'Reading' | 'Completed' =
-    volumesCompleted === book.volumes && pagesRead === book.pages
-      ? 'Completed'
-      : 'Reading';
+    pagesRead === book.pages ? 'Completed' : 'Reading';
 
   const data = {
-    volumesCompleted,
     pagesRead,
     status,
   };

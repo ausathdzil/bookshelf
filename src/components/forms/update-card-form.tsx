@@ -2,16 +2,14 @@
 
 import { Button } from '@/components/ui/button';
 import { SelectBook } from '@/db/schema';
-import { updateBookVolumesAndPages } from '@/lib/actions';
+import { updateBookPages } from '@/lib/actions';
 import { useTransition } from 'react';
 
 export default function UpdateCardForm({
   book,
-  volumesCompleted,
   pagesRead,
 }: {
   book: SelectBook;
-  volumesCompleted: number;
   pagesRead: number;
 }) {
   const [isPending, startTransition] = useTransition();
@@ -20,10 +18,9 @@ export default function UpdateCardForm({
     <form
       action={async () => {
         const formData = new FormData();
-        formData.append('volumesCompleted', volumesCompleted.toString());
         formData.append('pagesRead', pagesRead.toString());
 
-        const updateBookById = updateBookVolumesAndPages.bind(
+        const updateBookById = updateBookPages.bind(
           null,
           book,
           book.id,
