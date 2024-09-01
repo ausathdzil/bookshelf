@@ -2,36 +2,9 @@ import { db } from '@/db';
 import { books, SelectBook, SelectUser, users } from '@/db/schema';
 import { and, desc, eq } from 'drizzle-orm';
 
-export async function getUserById(id: SelectUser['id']): Promise<
-  Array<{
-    id: string;
-    name: string | null;
-    email: string | null;
-    emailVerified: Date | null;
-    image: string | null;
-  }>
-> {
-  return db.select().from(users).where(eq(users.id, id));
-}
-
-export async function getBooksByUserId(id: SelectBook['userId']): Promise<
-  Array<{
-    id: string;
-    title: string;
-    author: string;
-    genre: string;
-    description: string;
-    volumes: number;
-    volumesCompleted: number;
-    pages: number;
-    pagesRead: number;
-    status: 'Reading' | 'Completed';
-    rating: number;
-    userId: string;
-    createdAt: Date;
-    updatedAt: Date;
-  }>
-> {
+export async function getBooksByUserId(
+  id: SelectBook['userId']
+): Promise<Array<SelectBook>> {
   try {
     return db
       .select()
@@ -47,24 +20,7 @@ export async function getBooksByUserId(id: SelectBook['userId']): Promise<
 export async function getBookById(
   id: SelectBook['id'],
   userId: SelectBook['userId']
-): Promise<
-  Array<{
-    id: string;
-    title: string;
-    author: string;
-    genre: string;
-    description: string;
-    volumes: number;
-    volumesCompleted: number;
-    pages: number;
-    pagesRead: number;
-    status: 'Reading' | 'Completed';
-    rating: number;
-    userId: string;
-    createdAt: Date;
-    updatedAt: Date;
-  }>
-> {
+): Promise<Array<SelectBook>> {
   try {
     return db
       .select()
@@ -73,5 +29,30 @@ export async function getBookById(
   } catch (error) {
     console.error('Database error:', error);
     throw new Error('Failed to fetch book data');
+  }
+}
+
+export interface OpenLibraryBook {
+  url: string;
+  key: string;
+  title: string;
+  subtitle: string;
+  authors: Array<{ url: string; name: string }>;
+  number_of_pages: number;
+  subjects: Array<{ name: string; url: string }>;
+  cover: { small: string; medium: string; large: string };
+}
+
+export async function fetchBookByISBN(isbn: string): Promise<OpenLibraryBook> {
+  try {
+    const res = await fetch(
+      `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
+    );
+    const data = await res.json();
+
+    return data[`ISBN:${isbn}`];
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    throw new Error('Failed to fetch books by isbn');
   }
 }

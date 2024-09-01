@@ -114,6 +114,7 @@ export async function createBook(userId: string, formData: FormData) {
   }
 
   revalidatePath(`/dashboard`);
+  redirect(`/dashboard`);
 }
 
 export async function updateBook(

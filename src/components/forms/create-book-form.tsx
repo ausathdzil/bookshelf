@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { createBook } from '@/lib/actions';
+import { OpenLibraryBook } from '@/lib/data';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -38,17 +39,23 @@ const CreateBookFormSchema = z.object({
   }),
 });
 
-export default function CreateBookForm({ userId }: { userId: string }) {
+export default function CreateBookForm({
+  userId,
+  OpenLibraryBook,
+}: {
+  userId: string;
+  OpenLibraryBook?: OpenLibraryBook;
+}) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof CreateBookFormSchema>>({
     resolver: zodResolver(CreateBookFormSchema),
     defaultValues: {
-      title: '',
-      author: '',
-      genre: '',
+      title: OpenLibraryBook?.title || '',
+      author: OpenLibraryBook?.authors[0].name || '',
+      genre: OpenLibraryBook?.subjects[0].name || '',
       volumes: 0,
-      pages: 0,
+      pages: OpenLibraryBook?.number_of_pages || 0,
     },
   });
 

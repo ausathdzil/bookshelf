@@ -27,7 +27,7 @@ export default function RootLayout({
       </head>
       <body className={`${manrope.className} antialiased`}>
         <Header />
-        <main className="flex flex-col bg-zinc-50 items-center py-10 gap-10 min-h-[calc(100vh-160px)]">
+        <main className="flex flex-col bg-zinc-50 items-center py-10 gap-8 min-h-[calc(100vh-160px)]">
           {children}
         </main>
         <Footer />

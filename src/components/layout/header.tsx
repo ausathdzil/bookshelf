@@ -30,14 +30,15 @@ export default async function Header() {
             <span>Bookshelf</span>
           </Button>
         </Link>
-        <ul className="flex items-center gap-4">
+        <div className="flex items-center gap-4">
+          <Link href="/search">
+            <Button variant="link">Search Books</Button>
+          </Link>
           {session ? (
             <>
-              <li>
-                <Link href="/dashboard">
-                  <Button variant='ghost'>Dashboard</Button>
-                </Link>
-              </li>
+              <Link href="/dashboard">
+                <Button variant="link">Dashboard</Button>
+              </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -64,13 +65,11 @@ export default async function Header() {
               </DropdownMenu>
             </>
           ) : (
-            <li>
-              <Link href="/signin">
-                <Button variant="outline">Sign In</Button>
-              </Link>
-            </li>
+            <Link href="/signin">
+              <Button variant="outline">Sign In</Button>
+            </Link>
           )}
-        </ul>
+        </div>
       </nav>
       <Separator />
     </header>
