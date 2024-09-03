@@ -61,10 +61,7 @@ export default async function Page() {
         <h1 className="text-3xl text-center font-bold">Books</h1>
         <Separator />
         <Suspense fallback={<BooksSectionSkeleton />}>
-          <BooksSection
-            user={user}
-            books={books}
-          />
+          <BooksSection books={books} />
         </Suspense>
         <div className="w-full space-x-4 text-right">
           <Dialog>

@@ -1,6 +1,5 @@
 import Overview from '@/components/dashboard/overview/overview';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
 import { SelectBook } from '@/db/schema';
 import { User } from 'next-auth';
 import Link from 'next/link';
@@ -31,7 +30,7 @@ export default function ProfileSection({
                 <li key={book.id}>
                   <Link
                     className="hover:underline"
-                    href={`/${user?.id}/dashboard/books/${book.id}`}
+                    href={`/dashboard/books/${book.id}`}
                   >
                     {book.title}
                   </Link>
