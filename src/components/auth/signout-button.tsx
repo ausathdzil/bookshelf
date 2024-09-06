@@ -13,46 +13,46 @@ import {
 
 export default function SignOut() {
   return (
-    <>
-      <Dialog>
-        <DialogTrigger className="w-full p-2">
-          <Button
-            className="w-full"
-            variant="destructive"
+    <Dialog>
+      <DialogTrigger className="w-full p-2">
+        <Button
+          className="w-full"
+          variant="destructive"
+        >
+          Sign Out
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="w-48 sm:w-96 rounded-lg">
+        <DialogHeader>
+          <DialogTitle>Sign Out</DialogTitle>
+          <DialogDescription>Continue Sign Out?</DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="gap-4 sm:gap-0">
+          <form
+            className="w-full sm:w-1/4"
+            action={async () => {
+              'use server';
+              await signOut();
+            }}
           >
-            Sign Out
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Sign Out</DialogTitle>
-            <DialogDescription>Continue Sign Out?</DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <form
-              action={async () => {
-                'use server';
-                await signOut();
-              }}
+            <Button
+              type="submit"
+              variant="destructive"
+              className="w-full"
             >
-              <Button
-                type="submit"
-                variant="destructive"
-              >
-                Sign Out
-              </Button>
-            </form>
-            <DialogClose asChild>
-              <Button
-                type="button"
-                variant="outline"
-              >
-                Cancel
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+              Sign Out
+            </Button>
+          </form>
+          <DialogClose asChild>
+            <Button
+              type="button"
+              variant="outline"
+            >
+              Cancel
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
