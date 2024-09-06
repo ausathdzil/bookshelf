@@ -33,31 +33,6 @@ const CreateBook = FormSchema.omit({
   updatedAt: true,
 });
 
-const UpdateBook = FormSchema.omit({
-  id: true,
-  title: true,
-  author: true,
-  genre: true,
-  pages: true,
-  userId: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-const UpdateBookPages = FormSchema.omit({
-  id: true,
-  title: true,
-  author: true,
-  genre: true,
-  description: true,
-  pages: true,
-  status: true,
-  rating: true,
-  userId: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
 export async function createBook(userId: string, formData: FormData) {
   const validatedFields = CreateBook.safeParse({
     title: formData.get('title'),
@@ -108,13 +83,24 @@ export async function createBook(userId: string, formData: FormData) {
   redirect(`/dashboard`);
 }
 
+const UpdateBook = FormSchema.omit({
+  id: true,
+  userId: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export async function updateBook(
   id: string,
   userId: string,
   formData: FormData
 ) {
   const validatedFields = UpdateBook.safeParse({
+    title: formData.get('title'),
+    author: formData.get('author'),
+    genre: formData.get('genre'),
     description: formData.get('description'),
+    pages: formData.get('pages'),
     pagesRead: formData.get('pagesRead'),
     status: formData.get('status'),
     rating: formData.get('rating'),
@@ -127,10 +113,23 @@ export async function updateBook(
     };
   }
 
-  const { description, pagesRead, status, rating } = validatedFields.data;
+  const {
+    title,
+    author,
+    genre,
+    description,
+    pages,
+    pagesRead,
+    status,
+    rating,
+  } = validatedFields.data;
 
   const data = {
+    title,
+    author,
+    genre,
     description,
+    pages,
     pagesRead,
     status,
     rating,
@@ -150,6 +149,20 @@ export async function updateBook(
   revalidatePath(`/dashboard/books/${id}`);
   redirect(`/dashboard/books/${id}`);
 }
+
+const UpdateBookPages = FormSchema.omit({
+  id: true,
+  title: true,
+  author: true,
+  genre: true,
+  description: true,
+  pages: true,
+  status: true,
+  rating: true,
+  userId: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
 export async function updateBookPages(
   book: SelectBook,

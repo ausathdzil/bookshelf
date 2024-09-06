@@ -46,10 +46,10 @@ export interface OpenLibraryBook {
 export async function fetchBookByISBN(isbn: string): Promise<OpenLibraryBook> {
   try {
     const res = await fetch(
-      `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`
+      `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`,
+      { next: { revalidate: 3600 } }
     );
     const data = await res.json();
-
     return data[`ISBN:${isbn}`];
   } catch (error) {
     console.error('Error fetching books:', error);

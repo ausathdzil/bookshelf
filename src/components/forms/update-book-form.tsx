@@ -26,9 +26,21 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const UpdateBookFormSchema = z.object({
+  title: z
+    .string()
+    .max(100, { message: 'Title should not exceed 100 characters.' }),
+  author: z
+    .string()
+    .max(50, { message: 'Author should not exceed 50 characters.' }),
+  genre: z
+    .string()
+    .max(50, { message: 'Genre should not exceed 50 characters.' }),
   description: z
     .string()
     .max(500, { message: 'Description should not exceed 500 characters.' }),
+  pages: z.coerce.number().gte(0, {
+    message: 'Pages should at least be 1',
+  }),
   pagesRead: z.coerce.number().gte(0, {
     message: 'Pages read should at least be 0',
   }),
@@ -54,7 +66,11 @@ export default function UpdateBookForm({
   const form = useForm<z.infer<typeof UpdateBookFormSchema>>({
     resolver: zodResolver(UpdateBookFormSchema),
     defaultValues: {
+      title: book.title,
+      author: book.author,
+      genre: book.genre,
       description: book.description,
+      pages: book.pages,
       pagesRead: book.pagesRead,
       status: book.status,
       rating: book.rating,
@@ -63,7 +79,11 @@ export default function UpdateBookForm({
 
   async function onSubmit(values: z.infer<typeof UpdateBookFormSchema>) {
     const formData = new FormData();
+    formData.append('title', values.title);
+    formData.append('author', values.author);
+    formData.append('genre', values.genre);
     formData.append('description', values.description);
+    formData.append('pages', values.pages.toString());
     formData.append('pagesRead', values.pagesRead.toString());
     formData.append('status', values.status);
     formData.append('rating', values.rating.toString());
@@ -84,6 +104,54 @@ export default function UpdateBookForm({
       >
         <FormField
           control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={book.title}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="author"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Author</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={book.author}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="genre"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Genre</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={book.genre}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="description"
           render={({ field }) => (
             <FormItem>
@@ -92,6 +160,23 @@ export default function UpdateBookForm({
                 <Textarea
                   className="resize-none"
                   placeholder="Add a description"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="pages"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Pages</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={book.pages.toString()}
+                  type="number"
                   {...field}
                 />
               </FormControl>
