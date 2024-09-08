@@ -21,6 +21,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { SelectBook } from '@/db/schema';
 import { updateBook } from '@/lib/actions';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -258,7 +259,17 @@ export default function UpdateBookForm({
           disabled={isPending}
           type="submit"
         >
-          Submit
+          {isPending ? (
+            <>
+              <Loader2
+                size={16}
+                className="animate-spin"
+              />
+              <span className="ml-2">Update</span>
+            </>
+          ) : (
+            'Update'
+          )}
         </Button>
       </form>
     </Form>

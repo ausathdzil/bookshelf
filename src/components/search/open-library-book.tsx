@@ -10,7 +10,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { fetchBookByISBN } from '@/lib/data';
-import { Frown } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -20,75 +19,70 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
 
   const book = await fetchBookByISBN(query);
 
-  if (!book) {
-    return (
-      <div className="flex flex-col items-center gap-4">
-        <Frown size={50} />
-        <p>No book found for ISBN: {query}</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex items-start gap-6">
-      <div className="relative w-[225px] h-[350px]">
-        {book.cover ? (
-          <Image
-            src={book.cover.large}
-            alt={book.title}
-            className="rounded-tr-sm rounded-br-sm"
-            fill
-          />
-        ) : (
-          <div className="p-4 text-center w-full h-full rounded-md bg-muted flex flex-col justify-center items-center gap-2">
-            <h1 className="text-xl font-bold">{book.title}</h1>
-            <p className="text-base text-muted-foreground">
-              {book.authors.map((author) => author.name).join(', ')}
-            </p>
-          </div>
-        )}
-      </div>
-      <div className="space-y-4">
-        <article className="space-y-1 w-[300px]">
-          <h1 className="text-lg font-bold">{book.title}</h1>
-          <p className="text-base text-muted-foreground">
-            {book.authors.map((author) => author.name).join(', ')}
-          </p>
-          <p>
-            {book.subjects
-              .slice(0, 4)
-              .map((subject) => subject.name)
-              .join(', ')}
-          </p>
-          <p>{book.number_of_pages} pages</p>
-          <Link
-            href={book.url}
-            target="_blank"
-            className="text-blue-500 hover:underline"
-          >
-            More Info
-          </Link>
-        </article>
-        {session && (
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button>Add book</Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-md">
-              <DialogHeader>
-                <DialogTitle>Add book</DialogTitle>
-                <DialogDescription>
-                  Add {book.title} to your bookshelf.
-                </DialogDescription>
-              </DialogHeader>
-              <CreateBookForm
-                userId={user?.id as string}
-                OpenLibraryBook={book}
+    <>
+      {book && (
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+          <div className="relative w-[225px] h-[350px]">
+            {book.cover ? (
+              <Image
+                src={book.cover.large}
+                alt={book.title}
+                className="rounded-tr-sm rounded-br-sm"
+                fill
               />
-            </DialogContent>
-          </Dialog>
-        )}
-      </div>
-    </div>
+            ) : (
+              <div className="p-4 text-center w-full h-full rounded-md bg-muted flex flex-col justify-center items-center gap-2">
+                <h1 className="text-xl font-bold">{book.title}</h1>
+                <p className="text-base text-muted-foreground">
+                  {book.authors.map((author) => author.name).join(', ')}
+                </p>
+              </div>
+            )}
+          </div>
+          <div className="space-y-4 text-center sm:text-left">
+            <article className="space-y-1 w-[300px]">
+              <h1 className="text-lg font-bold">{book.title}</h1>
+              <p className="text-base text-muted-foreground">
+                {book.authors.map((author) => author.name).join(', ')}
+              </p>
+              <p>
+                {book.subjects
+                  .slice(0, 4)
+                  .map((subject) => subject.name)
+                  .join(', ')}
+              </p>
+              <p>{book.number_of_pages} pages</p>
+              <Link
+                href={book.url}
+                target="_blank"
+                className="text-blue-500 hover:underline"
+              >
+                More Info
+              </Link>
+            </article>
+            {session && (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>Add book</Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Add book</DialogTitle>
+                    <DialogDescription>
+                      Add {book.title} to your bookshelf.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <CreateBookForm
+                    userId={user?.id as string}
+                    OpenLibraryBook={book}
+                  />
+                </DialogContent>
+              </Dialog>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

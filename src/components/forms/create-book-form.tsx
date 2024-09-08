@@ -14,7 +14,8 @@ import { Input } from '@/components/ui/input';
 import { createBook } from '@/lib/actions';
 import { OpenLibraryBook } from '@/lib/data';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTransition } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -151,7 +152,17 @@ export default function CreateBookForm({
             disabled={isPending}
             type="submit"
           >
-            Submit
+            {isPending ? (
+              <>
+                <Loader2
+                  size={16}
+                  className="animate-spin"
+                />
+                <span className="ml-2">Submit</span>
+              </>
+            ) : (
+              'Submit'
+            )}
           </Button>
           <DialogFooter>
             <DialogClose asChild>

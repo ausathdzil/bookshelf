@@ -22,7 +22,7 @@ export default function SearchBook() {
   }, 300);
 
   return (
-    <div className="w-1/6 flex flex-col items-center gap-2">
+    <div className="lg:w-1/6 flex flex-col items-center gap-2">
       <Label
         htmlFor="search"
         className="text-xl sr-only"
@@ -36,7 +36,7 @@ export default function SearchBook() {
         defaultValue={searchParams.get('query')?.toString()}
         placeholder="Enter ISBN"
       />
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground text-center">
         ISBN API provided by{' '}
         <span>
           <Link

@@ -18,7 +18,7 @@ export default async function Home() {
         </article>
       </section>
       <section className="flex flex-col items-center gap-8">
-        <div className="hidden sm:block relative w-[800px] h-[400px]">
+        <div className="hidden sm:block relative w-[600px] lg:w-[800px] h-[400px]">
           <Image
             src="/dashboard-example.png"
             alt="Dashboard example"

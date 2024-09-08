@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { SelectBook } from '@/db/schema';
 import { updateBookPages } from '@/lib/actions';
+import { Loader2 } from 'lucide-react';
 import { useTransition } from 'react';
 
 export default function UpdateCardForm({
@@ -36,7 +37,17 @@ export default function UpdateCardForm({
         type="submit"
         disabled={isPending}
       >
-        Update Book
+        {isPending ? (
+          <>
+            <Loader2
+              size={16}
+              className="animate-spin"
+            />
+            <span className="ml-2">Update Book</span>
+          </>
+        ) : (
+          'Update Book'
+        )}
       </Button>
     </form>
   );

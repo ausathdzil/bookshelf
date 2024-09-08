@@ -20,7 +20,7 @@ export default async function Header() {
 
   return (
     <>
-      <header className="max-w-[80%] mx-auto">
+      <header className="max-w-[75%] mx-auto">
         <nav className="flex justify-between items-center py-4">
           <Link href="/">
             <Button

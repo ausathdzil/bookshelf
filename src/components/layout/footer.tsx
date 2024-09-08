@@ -6,7 +6,7 @@ export default function Footer() {
     <>
       <Separator />
       <footer className="bg-zinc-950 text-sm text-white">
-        <div className="flex justify-between items-center py-8 max-w-[80%] mx-auto">
+        <div className="flex justify-between items-center py-8 max-w-[75%] mx-auto">
           <p>&copy; 2024 Ausath Ikram</p>
           <nav>
             <ul className="flex gap-8">
