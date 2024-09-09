@@ -1,44 +1,31 @@
-import { Badge } from '@/components/ui/badge';
+import { auth } from '@/auth';
+import BookProgressCard from '@/components/dashboard/books/book-progress-card';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { SelectBook } from '@/db/schema';
-import clsx from 'clsx';
+import { getBookById } from '@/lib/data';
 import { PencilIcon } from 'lucide-react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
-export default function BookDetails({ book }: { book: SelectBook }) {
+export default async function BookDetails({ bookId }: { bookId: string }) {
+  const session = await auth();
+  const user = session?.user;
+  const book = await getBookById(bookId, user?.id as string);
+
+  if (!book.length) {
+    notFound();
+  }
+
   return (
     <>
-      <div className="w-full flex justify-between items-start">
+      <section className="w-full flex justify-between items-start">
         <div className="w-full space-y-4">
           <article className="space-y-1">
-            <h1 className="text-2xl font-bold">{book.title}</h1>
-            <p className="text-muted-foreground">{book.author}</p>
-            <p className="text-muted-foreground">{book.genre}</p>
+            <h1 className="text-2xl font-bold">{book[0].title}</h1>
+            <p className="text-muted-foreground">{book[0].author}</p>
+            <p className="text-muted-foreground">{book[0].genre}</p>
           </article>
-          <div className="space-x-2">
-            <Badge
-              className={clsx({
-                'bg-blue-500': book.status === 'Completed',
-                'bg-green-500': book.status === 'Reading',
-              })}
-            >
-              {book.status}
-            </Badge>
-            <Badge
-              className={clsx({
-                'border-yellow-400': book.rating && book.rating === 5,
-                'border-purple-400': book.rating && book.rating < 5,
-                'border-red-400': book.rating && book.rating < 2,
-              })}
-              variant="outline"
-            >
-              {book.rating === 0 ? 'Unrated' : `${book.rating} ⭐`}
-            </Badge>
-          </div>
         </div>
-        <Link href={`/dashboard/books/${book.id}/edit`}>
+        <Link href={`/dashboard/books/${book[0].id}/edit`}>
           <Button
             className="flex gap-4"
             variant="outline"
@@ -47,28 +34,11 @@ export default function BookDetails({ book }: { book: SelectBook }) {
             <PencilIcon size={16} />
           </Button>
         </Link>
-      </div>
-      <div className="w-full space-y-4">
-        <p>{book.description}</p>
-        <div className="w-1/2 flex gap-4">
-          <Card className="w-full">
-            <CardHeader className="space-y-4">
-              <CardTitle>Pages</CardTitle>
-              <Progress
-                className={
-                  book.status === 'Completed'
-                    ? '[&>*]:bg-blue-500'
-                    : '[&>*]:bg-emerald-500'
-                }
-                value={(book.pagesRead / book.pages) * 100}
-              />
-              <p>
-                {book.pagesRead} / {book.pages}
-              </p>
-            </CardHeader>
-          </Card>
-        </div>
-      </div>
+      </section>
+      <section className="w-full space-y-4">
+        <p>{book[0].description}</p>
+        <BookProgressCard book={book[0]} />
+      </section>
     </>
   );
 }

@@ -1,6 +1,4 @@
-import { auth } from '@/auth';
-import { columns } from '@/components/dashboard/books/books-columns';
-import BooksTable from '@/components/dashboard/books/books-table';
+import BooksTableSection from '@/components/dashboard/books/books-table-section';
 import BooksTableSkeleton from '@/components/skeletons/books-table-skeleton';
 import {
   Breadcrumb,
@@ -9,21 +7,10 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { getBooksByUserId } from '@/lib/data';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
-export default async function Page() {
-  const session = await auth();
-  const user = session?.user;
-  const books = await getBooksByUserId(user?.id as string);
-
-  const formattedBooks = books.map((book) => ({
-    ...book,
-    pagesProgress: `${book.pagesRead} / ${book.pages}` || null,
-    updatedAt: book.updatedAt.toISOString().split('T')[0] || '',
-  }));
-
+export default function Page() {
   return (
     <section className="w-full flex flex-col justify-center items-start gap-4 px-44">
       <Breadcrumb>
@@ -47,11 +34,7 @@ export default async function Page() {
         </BreadcrumbList>
       </Breadcrumb>
       <Suspense fallback={<BooksTableSkeleton />}>
-        <h1 className="text-3xl font-bold">{user?.name}&apos;s Bookshelf</h1>
-        <BooksTable
-          columns={columns}
-          data={formattedBooks}
-        />
+        <BooksTableSection />
       </Suspense>
     </section>
   );
