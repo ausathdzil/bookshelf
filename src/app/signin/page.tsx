@@ -25,7 +25,7 @@ const providers = [
   },
 ];
 
-export default async function Page() {
+export default function Page() {
   return (
     <section className="flex flex-col items-center gap-8">
       <LibraryBig className="w-16 h-16" />

@@ -1,11 +1,8 @@
-import { auth } from '@/auth';
 import { LibraryBig } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function Home() {
-  const session = await auth();
-
+export default function Home() {
   return (
     <>
       <section className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
@@ -27,21 +24,12 @@ export default async function Home() {
             fill
           />
         </div>
-        {!session ? (
-          <p className="text-base sm:text-center">
-            <span className="text-blue-500 hover:underline">
-              <Link href="/signin">Sign in</Link>
-            </span>{' '}
-            to get started.
-          </p>
-        ) : (
-          <p className="text-base sm:text-center">
-            <span className="text-blue-500 hover:underline">
-              <Link href="/dashboard">Go to dashboard</Link>
-            </span>{' '}
-            to get started.
-          </p>
-        )}
+        <p className="text-base sm:text-center">
+          <span className="text-blue-500 hover:underline">
+            <Link href="/signin">Sign in</Link>
+          </span>{' '}
+          to get started.
+        </p>
       </section>
     </>
   );

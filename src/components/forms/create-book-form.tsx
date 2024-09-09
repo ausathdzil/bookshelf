@@ -15,7 +15,7 @@ import { createBook } from '@/lib/actions';
 import { OpenLibraryBook } from '@/lib/data';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
