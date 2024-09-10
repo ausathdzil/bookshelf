@@ -16,20 +16,15 @@ export default async function BookBreadcrumb({ bookId }: { bookId: string }) {
   }
 
   return (
-    <>
-      <Suspense
-        fallback={<Skeleton className="w-[70px] h-[20px] rounded-lg" />}
-      >
-        <BreadcrumbLink asChild>
-          <Link
-            className="text-foreground"
-            href={`/dashboard/books/${bookId}`}
-          >
-            {book[0].title}
-          </Link>
-        </BreadcrumbLink>
-      </Suspense>
-      {}
-    </>
+    <Suspense fallback={<Skeleton className="w-[70px] h-[20px] rounded-lg" />}>
+      <BreadcrumbLink asChild>
+        <Link
+          className="text-foreground"
+          href={`/dashboard/books/${bookId}`}
+        >
+          {book[0].title}
+        </Link>
+      </BreadcrumbLink>
+    </Suspense>
   );
 }
