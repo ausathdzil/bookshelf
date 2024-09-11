@@ -1,14 +1,16 @@
-import { auth } from '@/auth';
 import Overview from '@/components/dashboard/overview/overview';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getBooksByUserId } from '@/lib/data';
+import { SelectBook } from '@/db/schema';
+import { User } from 'next-auth';
 import Link from 'next/link';
 
-export default async function ProfileSection({}: {}) {
-  const session = await auth();
-  const user = session?.user;
-  const books = await getBooksByUserId(user?.id as string);
-  
+export default async function ProfileSection({
+  user,
+  books,
+}: {
+  user: User | undefined;
+  books: SelectBook[];
+}) {
   return (
     <div className="w-full flex items-start gap-16">
       <div className="flex flex-col items-center space-y-4">

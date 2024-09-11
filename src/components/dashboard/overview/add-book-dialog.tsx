@@ -1,4 +1,3 @@
-import { auth } from '@/auth';
 import CreateBookForm from '@/components/forms/create-book-form';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,10 +9,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-export default async function AddBookDialog() {
-  const session = await auth();
-  const user = session?.user;
-
+export default async function AddBookDialog({ userId }: { userId: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -24,7 +20,7 @@ export default async function AddBookDialog() {
           <DialogTitle>Add book</DialogTitle>
           <DialogDescription>Add a book to your bookshelf.</DialogDescription>
         </DialogHeader>
-        <CreateBookForm userId={user?.id as string} />
+        <CreateBookForm userId={userId} />
       </DialogContent>
     </Dialog>
   );

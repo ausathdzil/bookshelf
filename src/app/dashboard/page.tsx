@@ -1,19 +1,11 @@
-import AddBookDialog from '@/components/dashboard/overview/add-book-dialog';
-import BooksSection from '@/components/dashboard/overview/books-section';
-import ProfileSection from '@/components/dashboard/overview/profile-section';
-import BooksSectionSkeleton from '@/components/skeletons/books-section-skeleton';
-import ProfileSectionSkeleton from '@/components/skeletons/profile-section-skeleton';
+import OverviewSection from '@/components/dashboard/overview/overview-section';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
 } from '@/components/ui/breadcrumb';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { Suspense } from 'react';
 
 export default function Page() {
   return (
@@ -32,36 +24,7 @@ export default function Page() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="w-full space-y-6">
-        <h1 className="text-3xl font-bold">Profile</h1>
-        <Separator />
-        <Suspense fallback={<ProfileSectionSkeleton />}>
-          <ProfileSection />
-        </Suspense>
-        <Separator />
-      </div>
-      <div className="w-full space-y-6">
-        <h1 className="text-3xl text-center font-bold">Books</h1>
-        <Separator />
-        <Suspense fallback={<BooksSectionSkeleton />}>
-          <BooksSection />
-        </Suspense>
-        <div className="w-full space-x-4 text-right">
-          <AddBookDialog />
-          <Link href="dashboard/books">
-            <Button
-              className="text-lg"
-              variant="link"
-            >
-              View all books{' '}
-              <span className="ml-2">
-                <ArrowRight />
-              </span>
-            </Button>
-          </Link>
-        </div>
-        <Separator />
-      </div>
+      <OverviewSection />
     </section>
   );
 }

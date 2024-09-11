@@ -33,7 +33,10 @@ const CreateBook = FormSchema.omit({
   updatedAt: true,
 });
 
-export async function createBook(userId: string, formData: FormData) {
+export async function createBook(
+  userId: SelectBook['userId'],
+  formData: FormData
+) {
   const validatedFields = CreateBook.safeParse({
     title: formData.get('title'),
     author: formData.get('author'),
@@ -53,7 +56,7 @@ export async function createBook(userId: string, formData: FormData) {
   const description = '';
   const pagesRead = 0;
   const rating = 0;
-  const status: 'Reading' | 'Completed' = 'Reading';
+  const status: SelectBook['status'] = 'Reading';
   const createdAt = new Date();
   const updatedAt = new Date();
 
@@ -91,8 +94,8 @@ const UpdateBook = FormSchema.omit({
 });
 
 export async function updateBook(
-  id: string,
-  userId: string,
+  id: SelectBook['id'],
+  userId: SelectBook['userId'],
   formData: FormData
 ) {
   const validatedFields = UpdateBook.safeParse({
@@ -166,8 +169,8 @@ const UpdateBookPages = FormSchema.omit({
 
 export async function updateBookPages(
   book: SelectBook,
-  id: string,
-  userId: string,
+  id: SelectBook['id'],
+  userId: SelectBook['userId'],
   formData: FormData
 ) {
   const validatedFields = UpdateBookPages.safeParse({
@@ -183,7 +186,7 @@ export async function updateBookPages(
 
   const { pagesRead } = validatedFields.data;
 
-  const status: 'Reading' | 'Completed' =
+  const status: SelectBook['status'] =
     pagesRead === book.pages ? 'Completed' : 'Reading';
 
   const data = {
@@ -205,7 +208,7 @@ export async function updateBookPages(
   revalidatePath(`/dashboard`);
 }
 
-export async function deleteBook(id: string) {
+export async function deleteBook(id: SelectBook['id']) {
   try {
     await db.delete(books).where(eq(books.id, id));
     revalidatePath(`/dashboard/books`);

@@ -1,12 +1,7 @@
-import { auth } from '@/auth';
 import BookCard from '@/components/dashboard/overview/book-card';
-import { getBooksByUserId } from '@/lib/data';
+import { SelectBook } from '@/db/schema';
 
-export default async function BooksSection() {
-  const session = await auth();
-  const user = session?.user;
-  const books = await getBooksByUserId(user?.id as string);
-
+export default async function BooksSection({ books }: { books: SelectBook[] }) {
   return (
     <ul className="w-full grid grid-cols-4 gap-6">
       {books.length > 0 && (
