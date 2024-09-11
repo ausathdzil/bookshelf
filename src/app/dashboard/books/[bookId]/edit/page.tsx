@@ -45,10 +45,7 @@ export default async function Page({
               fallback={<Skeleton className="w-[70px] h-[20px] rounded-lg" />}
             >
               <BreadcrumbLink asChild>
-                <Link
-                  className="text-foreground"
-                  href={`/dashboard/books/${params.bookId}`}
-                >
+                <Link href={`/dashboard/books/${params.bookId}`}>
                   {book[0].title}
                 </Link>
               </BreadcrumbLink>
