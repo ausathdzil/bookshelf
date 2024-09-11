@@ -1,6 +1,6 @@
 import { db } from '@/db';
 import { books, SelectBook } from '@/db/schema';
-import { and, desc, eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 export async function getBooksByUserId(
   id: SelectBook['userId']
@@ -18,14 +18,10 @@ export async function getBooksByUserId(
 }
 
 export async function getBookById(
-  id: SelectBook['id'],
-  userId: SelectBook['userId']
+  id: SelectBook['id']
 ): Promise<Array<SelectBook>> {
   try {
-    return db
-      .select()
-      .from(books)
-      .where(and(eq(books.id, id), eq(books.userId, userId)));
+    return db.select().from(books).where(eq(books.id, id));
   } catch (error) {
     console.error('Database error:', error);
     throw new Error('Failed to fetch book data');

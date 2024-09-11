@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { SelectBook } from '@/db/schema';
 import { createBook } from '@/lib/actions';
 import { OpenLibraryBook } from '@/lib/data';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,7 +42,7 @@ export default function CreateBookForm({
   userId,
   OpenLibraryBook,
 }: {
-  userId: string;
+  userId: SelectBook['userId'];
   OpenLibraryBook?: OpenLibraryBook;
 }) {
   const [isPending, startTransition] = useTransition();

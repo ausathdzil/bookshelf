@@ -11,7 +11,7 @@ export default function UpdateCardForm({
   pagesRead,
 }: {
   book: SelectBook;
-  pagesRead: number;
+  pagesRead: SelectBook['pagesRead'];
 }) {
   const [isPending, startTransition] = useTransition();
 

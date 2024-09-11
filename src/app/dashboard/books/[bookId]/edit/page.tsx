@@ -1,4 +1,3 @@
-import BookBreadcrumb from '@/components/dashboard/books/book-breadcrumb';
 import EditBookSection from '@/components/dashboard/books/edit-book-section';
 import {
   Breadcrumb,
@@ -8,10 +7,23 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SelectBook } from '@/db/schema';
+import { getBookById } from '@/lib/data';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
-export default function Page({ params }: { params: { bookId: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: { bookId: SelectBook['id'] };
+}) {
+  const book = await getBookById(params.bookId);
+
+  if (!book.length) {
+    notFound();
+  }
+
   return (
     <section className="w-full flex flex-col justify-center items-start gap-4 px-44">
       <Breadcrumb>
@@ -29,7 +41,18 @@ export default function Page({ params }: { params: { bookId: string } }) {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BookBreadcrumb bookId={params.bookId} />
+            <Suspense
+              fallback={<Skeleton className="w-[70px] h-[20px] rounded-lg" />}
+            >
+              <BreadcrumbLink asChild>
+                <Link
+                  className="text-foreground"
+                  href={`/dashboard/books/${params.bookId}`}
+                >
+                  {book[0].title}
+                </Link>
+              </BreadcrumbLink>
+            </Suspense>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -48,7 +71,10 @@ export default function Page({ params }: { params: { bookId: string } }) {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <EditBookSection bookId={params.bookId} />
+      <EditBookSection
+        book={book[0]}
+        userId={book[0].userId}
+      />
     </section>
   );
 }

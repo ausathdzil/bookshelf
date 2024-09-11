@@ -58,8 +58,8 @@ export default function UpdateBookForm({
   userId,
   book,
 }: {
-  id: string;
-  userId: string;
+  id: SelectBook['id'];
+  userId: SelectBook['userId'];
   book: SelectBook;
 }) {
   const [isPending, startTransition] = useTransition();
