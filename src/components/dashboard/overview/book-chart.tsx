@@ -52,7 +52,7 @@ export default function BookChart({ books }: { books: SelectBook[] }) {
   };
 
   return (
-    <Card className="flex flex-col w-1/2">
+    <Card>
       <CardHeader className="items-center pb-0">
         <CardTitle>Bookshelf Stats</CardTitle>
       </CardHeader>
@@ -119,7 +119,7 @@ export default function BookChart({ books }: { books: SelectBook[] }) {
           </dl>
         </div>
         <Separator orientation="vertical" />
-        <div className="flex flex-col gap-4">
+        <div className="flex-col gap-4 hidden sm:flex">
           <dl className="flex justify-between gap-6">
             <dt>Total Entries</dt>
             <dd>{totalBooks}</dd>

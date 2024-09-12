@@ -12,7 +12,7 @@ export default async function ProfileSection({
   books: SelectBook[];
 }) {
   return (
-    <div className="w-full flex items-start gap-16">
+    <div className="w-full flex flex-col lg:flex-row items-center lg:items-start gap-16">
       <div className="flex flex-col items-center space-y-4">
         <Avatar className="w-20 h-20">
           <AvatarImage src={user?.image as string} />
@@ -26,7 +26,7 @@ export default async function ProfileSection({
           <>
             <h2 className="font-bold">Recent Books</h2>
             <ul className="text-sm space-y-2 list-disc">
-              {books.slice(0, 7).map((book) => (
+              {books.slice(0, 5).map((book) => (
                 <li key={book.id}>
                   <Link
                     className="hover:underline"
@@ -40,7 +40,7 @@ export default async function ProfileSection({
           </>
         )}
       </div>
-      <Overview userId={user?.id as string} />
+      <Overview books={books} />
     </div>
   );
 }

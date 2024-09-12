@@ -1,17 +1,15 @@
 import BookChart from '@/components/dashboard/overview/book-chart';
 import RecentBookCard from '@/components/dashboard/overview/recent-book-card';
-import { getBooksByUserId } from '@/lib/data';
+import { SelectBook } from '@/db/schema';
 
-export default async function Overview({ userId }: { userId: string }) {
-  const books = await getBooksByUserId(userId);
-
+export default async function Overview({ books }: { books: SelectBook[] }) {
   if (books.length === 0) {
     return <p>No books found.</p>;
   }
 
   return (
-    <div className="w-full flex gap-6">
-      <ul className="w-1/2 space-y-6">
+    <div className="w-full grid xl:grid-cols-2 gap-6">
+      <ul className="space-y-6 hidden xl:block">
         {books.slice(0, 2).map((book) => (
           <li key={book.id}>
             <RecentBookCard book={book} />

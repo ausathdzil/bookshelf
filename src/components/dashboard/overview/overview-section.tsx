@@ -39,7 +39,7 @@ export default async function OverviewSection() {
           <AddBookDialog userId={user?.id as string} />
           <Link href="dashboard/books">
             <Button
-              className="text-lg"
+              className="sm:text-lg"
               variant="link"
             >
               View all books{' '}
