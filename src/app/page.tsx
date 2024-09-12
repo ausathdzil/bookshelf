@@ -24,6 +24,15 @@ export default function Home() {
             fill
           />
         </div>
+        <div className="block sm:hidden relative w-[256px] h-[400px]">
+          <Image
+            src="/mobile-dashboard-example.png"
+            alt="Mobile dashboard example"
+            className="rounded-lg border-2 border-gray-200 object-cover object-top"
+            priority={true}
+            fill
+          />
+        </div>
         <p className="text-base sm:text-center">
           <span className="text-blue-500 hover:underline">
             <Link href="/signin">Sign in</Link>
