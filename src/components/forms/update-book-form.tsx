@@ -29,28 +29,41 @@ import { z } from 'zod';
 const UpdateBookFormSchema = z.object({
   title: z
     .string()
+    .min(1, { message: 'Title is required.' })
     .max(100, { message: 'Title should not exceed 100 characters.' }),
   author: z
     .string()
+    .min(1, { message: 'Author is required.' })
     .max(50, { message: 'Author should not exceed 50 characters.' }),
   genre: z
     .string()
+    .min(1, { message: 'Genre is required.' })
     .max(50, { message: 'Genre should not exceed 50 characters.' }),
   description: z
     .string()
     .max(500, { message: 'Description should not exceed 500 characters.' }),
-  pages: z.coerce.number().gte(0, {
-    message: 'Pages should at least be 1',
-  }),
+  pages: z.coerce
+    .number()
+    .gte(0, {
+      message: 'Pages should at least be 1.',
+    })
+    .lte(30000, {
+      message: 'Pages should not exceed 30000.',
+    }),
   pagesRead: z.coerce.number().gte(0, {
-    message: 'Pages read should at least be 0',
+    message: 'Pages read should at least be 0.',
   }),
   status: z.enum(['Reading', 'Completed'], {
-    invalid_type_error: 'Please select book status',
+    invalid_type_error: 'Please select book status.',
   }),
-  rating: z.coerce.number().gte(0, {
-    message: 'Rating should at least be 0',
-  }),
+  rating: z.coerce
+    .number()
+    .gte(0, {
+      message: 'Rating should at least be 0.',
+    })
+    .lte(5, {
+      message: 'Rating should not exceed 5.',
+    }),
 });
 
 export default function UpdateBookForm({

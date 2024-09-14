@@ -9,14 +9,14 @@ import { z } from 'zod';
 
 const FormSchema = z.object({
   id: z.string().uuid(),
-  title: z.string(),
-  author: z.string(),
-  genre: z.string(),
+  title: z.string().min(1).max(100),
+  author: z.string().min(1).max(50),
+  genre: z.string().min(1).max(50),
   description: z.string(),
-  pages: z.coerce.number().int(),
-  pagesRead: z.coerce.number().int(),
+  pages: z.coerce.number().int().min(1),
+  pagesRead: z.coerce.number().int().min(0),
   status: z.enum(['Reading', 'Completed']),
-  rating: z.coerce.number().int(),
+  rating: z.coerce.number().int().min(0),
   userId: z.string().uuid(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -114,6 +114,14 @@ export async function updateBook(
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Missing Fields. Failed to Update Book.',
     };
+  }
+
+  if (validatedFields.data.pagesRead > validatedFields.data.pages) {
+    validatedFields.data.pagesRead = validatedFields.data.pages;
+  }
+
+  if (validatedFields.data.status === 'Completed') {
+    validatedFields.data.pagesRead = validatedFields.data.pages;
   }
 
   const {

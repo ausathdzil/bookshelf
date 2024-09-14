@@ -23,19 +23,23 @@ import { z } from 'zod';
 const CreateBookFormSchema = z.object({
   title: z
     .string()
-    .min(1, {
-      message: 'Title is required',
-    })
-    .max(200, { message: 'Title should not exceed 200 characters' }),
-  author: z.string().min(1, {
-    message: 'Author is required',
-  }),
-  genre: z.string().min(1, {
-    message: 'Genre is required',
-  }),
-  pages: z.coerce.number().int().gt(0, {
-    message: 'Pages should at least be 1',
-  }),
+    .min(1, { message: 'Title is required.' })
+    .max(100, { message: 'Title should not exceed 100 characters.' }),
+  author: z
+    .string()
+    .min(1, { message: 'Author is required.' })
+    .max(50, { message: 'Author should not exceed 50 characters.' }),
+  genre: z
+    .string()
+    .min(1, { message: 'Genre is required.' })
+    .max(50, { message: 'Genre should not exceed 50 characters.' }),
+  pages: z.coerce
+    .number()
+    .int()
+    .gte(0, { message: 'Pages should at least be 1.' })
+    .lte(30000, {
+      message: 'Pages should not exceed 30000.',
+    }),
 });
 
 export default function CreateBookForm({
