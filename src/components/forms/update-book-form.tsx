@@ -101,7 +101,7 @@ export default function UpdateBookForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 w-1/2"
+        className="space-y-4 lg:w-1/2"
       >
         <FormField
           control={form.control}

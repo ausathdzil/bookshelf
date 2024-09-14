@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default async function BookDetails({ book }: { book: SelectBook }) {
   return (
     <>
-      <section className="w-full flex justify-between items-start">
+      <section className="w-full flex flex-col sm:flex-row justify-between items-start gap-4">
         <div className="w-full space-y-4">
           <article className="space-y-1">
             <h1 className="text-2xl font-bold">{book.title}</h1>

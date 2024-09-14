@@ -1,6 +1,8 @@
 import { LibraryBig } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import dashboardExample from '../../public/dashboard-example.png';
+import mobileDashboardExample from '../../public/mobile-dashboard-example.png';
 
 export default function Home() {
   return (
@@ -17,19 +19,21 @@ export default function Home() {
       <section className="flex flex-col items-center gap-8">
         <div className="hidden sm:block relative w-[600px] lg:w-[800px] h-[400px]">
           <Image
-            src="/dashboard-example.png"
-            alt="Dashboard example"
             className="rounded-lg border-2 border-gray-200 object-cover object-top"
+            src={dashboardExample}
+            alt="Dashboard example"
             priority={true}
+            placeholder="blur"
             fill
           />
         </div>
         <div className="block sm:hidden relative w-[256px] h-[400px]">
           <Image
-            src="/mobile-dashboard-example.png"
-            alt="Mobile dashboard example"
             className="rounded-lg border-2 border-gray-200 object-cover object-top"
+            src={mobileDashboardExample}
+            alt="Mobile dashboard example"
             priority={true}
+            placeholder="blur"
             fill
           />
         </div>

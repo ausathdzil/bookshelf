@@ -26,7 +26,7 @@ export default async function Page({
   }
 
   return (
-    <section className="w-full flex flex-col justify-center items-start gap-4 px-44">
+    <section className="w-full flex flex-col justify-center items-start gap-4 sm:px-44">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

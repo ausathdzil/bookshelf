@@ -18,8 +18,8 @@ export default async function EditBookSection({
         <p className="text-muted-foreground">{book.genre}</p>
       </article>
       <Separator />
-      <div className="flex w-full gap-8">
-        <div className="w-1/2 space-y-4">
+      <div className="flex flex-col lg:flex-row w-full gap-8">
+        <div className="lg:w-1/2 space-y-4">
           <h1>Your Progress</h1>
           <BookProgressCard book={book} />
         </div>
