@@ -1,6 +1,4 @@
-import { signIn } from '@/auth';
-import { GitHubIcon, GoogleIcon } from '@/components/icons/icons';
-import { Button } from '@/components/ui/button';
+import SignInForm from '@/components/forms/signin-form';
 import {
   Card,
   CardContent,
@@ -9,19 +7,20 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { LibraryBig } from 'lucide-react';
-import { AuthError } from 'next-auth';
-import { redirect } from 'next/navigation';
 
-const providers = [
+export interface Provider {
+  id: string;
+  name: string;
+}
+
+const providers: Provider[] = [
   {
     id: 'google',
     name: 'Google',
-    icon: GoogleIcon,
   },
   {
     id: 'github',
     name: 'GitHub',
-    icon: GitHubIcon,
   },
 ];
 
@@ -38,31 +37,10 @@ export default function Page() {
         </CardHeader>
         <CardContent className="space-y-4">
           {providers.map((provider) => (
-            <form
+            <SignInForm
               key={provider.id}
-              className="w-full"
-              action={async () => {
-                'use server';
-                try {
-                  await signIn(provider.id, { redirectTo: '/' });
-                } catch (error) {
-                  if (error instanceof AuthError) {
-                    return redirect(`/`);
-                  }
-
-                  throw error;
-                }
-              }}
-            >
-              <Button
-                variant="outline"
-                type="submit"
-                className="w-full flex items-center justify-center gap-2"
-              >
-                <provider.icon />
-                <span>Sign in with {provider.name}</span>
-              </Button>
-            </form>
+              provider={provider}
+            />
           ))}
         </CardContent>
       </Card>
