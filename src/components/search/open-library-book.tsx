@@ -18,6 +18,7 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
   const user = session?.user;
 
   const book = await fetchBookByISBN(query);
+  console.log(book);
 
   return (
     <>
@@ -35,7 +36,8 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
               <div className="p-4 text-center w-full h-full rounded-md bg-muted flex flex-col justify-center items-center gap-2">
                 <h1 className="text-xl font-bold">{book.title}</h1>
                 <p className="text-base text-muted-foreground">
-                  {book.authors.map((author) => author.name).join(', ')}
+                  {book.authors &&
+                    book.authors.map((author) => author.name).join(', ')}
                 </p>
               </div>
             )}
@@ -43,23 +45,29 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
           <div className="space-y-4 text-center sm:text-left">
             <article className="space-y-1 w-[300px]">
               <h1 className="text-lg font-bold">{book.title}</h1>
-              <p className="text-base text-muted-foreground">
-                {book.authors.map((author) => author.name).join(', ')}
-              </p>
-              <p>
-                {book.subjects
-                  .slice(0, 4)
-                  .map((subject) => subject.name)
-                  .join(', ')}
-              </p>
-              <p>{book.number_of_pages} pages</p>
-              <Link
-                href={book.url}
-                target="_blank"
-                className="text-blue-500 hover:underline"
-              >
-                More Info
-              </Link>
+              {book.authors && (
+                <p className="text-base text-muted-foreground">
+                  {book.authors.map((author) => author.name).join(', ')}
+                </p>
+              )}
+              {book.subjects && (
+                <p>
+                  {book.subjects
+                    .slice(0, 4)
+                    .map((subject) => subject.name)
+                    .join(', ')}
+                </p>
+              )}
+              {book.number_of_pages && <p>{book.number_of_pages} pages</p>}
+              {book.url && (
+                <Link
+                  href={book.url}
+                  target="_blank"
+                  className="text-blue-500 hover:underline"
+                >
+                  More Info
+                </Link>
+              )}
             </article>
             {session && (
               <Dialog>
