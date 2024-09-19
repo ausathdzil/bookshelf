@@ -1,11 +1,9 @@
-import { auth } from '@/auth';
 import { columns } from '@/components/dashboard/books/books-columns';
 import BooksTable from '@/components/dashboard/books/books-table';
-import { getBooksByUserId } from '@/lib/data';
+import { getBooksByUserId, getUser } from '@/lib/data';
 
 export default async function BooksTableSection() {
-  const session = await auth();
-  const user = session?.user;
+  const user = await getUser();
   const books = await getBooksByUserId(user?.id as string);
   const formattedBooks = books.map((book) => ({
     ...book,

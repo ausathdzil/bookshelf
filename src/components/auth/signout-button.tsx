@@ -1,50 +1,38 @@
-import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import {
-  Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
+import { signOut } from 'next-auth/react';
 
 export default function SignOut() {
   return (
-    <Dialog>
-      <DialogTrigger className="w-full p-2">
+    <DialogContent className="w-48 sm:w-96 rounded-lg">
+      <DialogHeader>
+        <DialogTitle>Sign Out</DialogTitle>
+        <DialogDescription>Continue Sign Out?</DialogDescription>
+      </DialogHeader>
+      <DialogFooter className="gap-4 sm:gap-0">
         <Button
-          className="w-full"
+          type="submit"
           variant="destructive"
+          onClick={() => signOut()}
         >
           Sign Out
         </Button>
-      </DialogTrigger>
-      <DialogContent className="w-48 sm:w-96 rounded-lg">
-        <DialogHeader>
-          <DialogTitle>Sign Out</DialogTitle>
-          <DialogDescription>Continue Sign Out?</DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="gap-4 sm:gap-0">
+        <DialogClose asChild>
           <Button
-            type="submit"
-            variant="destructive"
-            onClick={() => signOut()}
+            type="button"
+            variant="outline"
           >
-            Sign Out
+            Cancel
           </Button>
-          <DialogClose asChild>
-            <Button
-              type="button"
-              variant="outline"
-            >
-              Cancel
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </DialogClose>
+      </DialogFooter>
+    </DialogContent>
   );
 }
