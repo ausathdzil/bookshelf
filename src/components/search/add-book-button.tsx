@@ -8,8 +8,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { OpenLibraryBook } from '@/lib/data';
 
-export default function AddBookDialog() {
+export default function AddBookButton({ book }: { book: OpenLibraryBook }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -18,9 +19,11 @@ export default function AddBookDialog() {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Add book</DialogTitle>
-          <DialogDescription>Add a book to your bookshelf.</DialogDescription>
+          <DialogDescription>
+            Add {book.title} to your bookshelf.
+          </DialogDescription>
         </DialogHeader>
-        <CreateBookForm />
+        <CreateBookForm OpenLibraryBook={book} />
       </DialogContent>
     </Dialog>
   );

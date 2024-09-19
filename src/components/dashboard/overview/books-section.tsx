@@ -1,7 +1,7 @@
 import BookCard from '@/components/dashboard/overview/book-card';
 import { SelectBook } from '@/db/schema';
 
-export default async function BooksSection({ books }: { books: SelectBook[] }) {
+export default function BooksSection({ books }: { books: SelectBook[] }) {
   return (
     <ul className="w-full grid lg:grid-cols-2 xl:grid-cols-4 gap-6">
       {books.length > 0 && (

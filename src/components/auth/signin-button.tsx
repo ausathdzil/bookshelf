@@ -1,11 +1,12 @@
 'use client';
 
+import { Provider } from '@/app/signin/page';
 import { GitHubIcon, GoogleIcon } from '@/components/icons/icons';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { useFormStatus } from 'react-dom';
 
-export function SignInButton({ provider }: { provider: any }) {
+export function SignInButton({ provider }: { provider: Provider }) {
   const { pending } = useFormStatus();
 
   return (

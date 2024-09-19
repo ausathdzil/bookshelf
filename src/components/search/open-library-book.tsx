@@ -1,22 +1,9 @@
-import { auth } from '@/auth';
-import CreateBookForm from '@/components/forms/create-book-form';
-import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { fetchBookByISBN } from '@/lib/data';
 import Image from 'next/image';
 import Link from 'next/link';
+import AddBookButton from './add-book-button';
 
 export default async function OpenLibraryBook({ query }: { query: string }) {
-  const session = await auth();
-  const user = session?.user;
-
   const book = await fetchBookByISBN(query);
 
   return (
@@ -68,25 +55,7 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
                 </Link>
               )}
             </article>
-            {session && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>Add book</Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-md">
-                  <DialogHeader>
-                    <DialogTitle>Add book</DialogTitle>
-                    <DialogDescription>
-                      Add {book.title} to your bookshelf.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <CreateBookForm
-                    userId={user?.id as string}
-                    OpenLibraryBook={book}
-                  />
-                </DialogContent>
-              </Dialog>
-            )}
+            <AddBookButton book={book} />
           </div>
         </div>
       )}

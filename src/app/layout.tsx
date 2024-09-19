@@ -1,10 +1,10 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { getUser } from '@/lib/data';
+import { UserProvider } from '@/lib/user-provider';
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
 import './globals.css';
-import { getUser } from '@/lib/data';
-import { UserProvider } from '@/lib/user-provider';
 
 const manrope = Manrope({ subsets: ['latin'] });
 

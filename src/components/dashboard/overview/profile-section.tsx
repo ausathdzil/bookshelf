@@ -4,11 +4,11 @@ import { SelectBook } from '@/db/schema';
 import { User } from 'next-auth';
 import Link from 'next/link';
 
-export default async function ProfileSection({
+export default function ProfileSection({
   user,
   books,
 }: {
-  user: User | undefined;
+  user: User | null | undefined;
   books: SelectBook[];
 }) {
   return (

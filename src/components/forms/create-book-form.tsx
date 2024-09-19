@@ -11,9 +11,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { SelectBook } from '@/db/schema';
 import { createBook } from '@/lib/actions';
 import { OpenLibraryBook } from '@/lib/data';
+import { useUser } from '@/lib/user-provider';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useTransition } from 'react';
@@ -43,12 +43,11 @@ const CreateBookFormSchema = z.object({
 });
 
 export default function CreateBookForm({
-  userId,
   OpenLibraryBook,
 }: {
-  userId: SelectBook['userId'];
   OpenLibraryBook?: OpenLibraryBook;
 }) {
+  const user = useUser();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof CreateBookFormSchema>>({
@@ -73,7 +72,7 @@ export default function CreateBookForm({
     formData.append('genre', values.genre);
     formData.append('pages', values.pages.toString());
 
-    const createBookWithId = createBook.bind(null, userId);
+    const createBookWithId = createBook.bind(null, user?.id as string);
 
     startTransition(async () => {
       await createBookWithId(formData);
