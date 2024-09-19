@@ -20,6 +20,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { SelectBook } from '@/db/schema';
 import { updateBook } from '@/lib/actions';
+import { useUser } from '@/lib/user-provider';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useTransition } from 'react';
@@ -68,13 +69,12 @@ const UpdateBookFormSchema = z.object({
 
 export default function UpdateBookForm({
   id,
-  userId,
   book,
 }: {
   id: SelectBook['id'];
-  userId: SelectBook['userId'];
   book: SelectBook;
 }) {
+  const user = useUser();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof UpdateBookFormSchema>>({
@@ -102,7 +102,7 @@ export default function UpdateBookForm({
     formData.append('status', values.status);
     formData.append('rating', values.rating.toString());
 
-    const updateBookWithId = updateBook.bind(null, id, userId);
+    const updateBookWithId = updateBook.bind(null, id, user?.id as string);
 
     startTransition(async () => {
       await updateBookWithId(formData);

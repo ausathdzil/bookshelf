@@ -68,10 +68,7 @@ export default async function Page({
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <EditBookSection
-        book={book[0]}
-        userId={book[0].userId}
-      />
+      <EditBookSection book={book[0]} />
     </section>
   );
 }

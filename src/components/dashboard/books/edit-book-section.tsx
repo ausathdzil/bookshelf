@@ -3,13 +3,7 @@ import UpdateBookForm from '@/components/forms/update-book-form';
 import { Separator } from '@/components/ui/separator';
 import { SelectBook } from '@/db/schema';
 
-export default async function EditBookSection({
-  book,
-  userId,
-}: {
-  book: SelectBook;
-  userId: SelectBook['userId'];
-}) {
+export default function EditBookSection({ book }: { book: SelectBook }) {
   return (
     <div className="w-full space-y-4">
       <article className="space-y-1">
@@ -25,7 +19,6 @@ export default async function EditBookSection({
         </div>
         <UpdateBookForm
           id={book.id}
-          userId={userId}
           book={book}
         />
       </div>
