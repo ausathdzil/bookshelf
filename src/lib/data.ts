@@ -1,6 +1,14 @@
+import { auth } from '@/auth';
 import { db } from '@/db';
 import { books, SelectBook } from '@/db/schema';
 import { desc, eq } from 'drizzle-orm';
+
+export async function getUser() {
+  const session = await auth();
+  if (!session) return null;
+
+  return session.user;
+}
 
 export async function getBooksByUserId(
   id: SelectBook['userId']

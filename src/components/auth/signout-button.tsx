@@ -1,4 +1,4 @@
-import { signOut } from '@/auth';
+import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -28,21 +28,13 @@ export default function SignOut() {
           <DialogDescription>Continue Sign Out?</DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-4 sm:gap-0">
-          <form
-            className="w-full sm:w-1/4"
-            action={async () => {
-              'use server';
-              await signOut();
-            }}
+          <Button
+            type="submit"
+            variant="destructive"
+            onClick={() => signOut()}
           >
-            <Button
-              type="submit"
-              variant="destructive"
-              className="w-full"
-            >
-              Sign Out
-            </Button>
-          </form>
+            Sign Out
+          </Button>
           <DialogClose asChild>
             <Button
               type="button"

@@ -18,7 +18,6 @@ export default async function OpenLibraryBook({ query }: { query: string }) {
   const user = session?.user;
 
   const book = await fetchBookByISBN(query);
-  console.log(book);
 
   return (
     <>
