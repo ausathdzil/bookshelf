@@ -14,6 +14,7 @@ import { Progress } from '@/components/ui/progress';
 import { SelectBook } from '@/db/schema';
 import clsx from 'clsx';
 import { StarIcon } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function BookCard({ book }: { book: SelectBook }) {
@@ -32,7 +33,16 @@ export default function BookCard({ book }: { book: SelectBook }) {
       )}
     >
       <CardHeader>
-        <CardTitle className="text-base">{book.title}</CardTitle>
+        <CardTitle className="text-base">
+          <Link
+            href={`dashboard/books/${book.id}`}
+            className="hover:underline"
+          >
+            {book.title.length > 30
+              ? book.title.substring(0, 30).concat('...')
+              : book.title}
+          </Link>
+        </CardTitle>
         <CardDescription className="flex gap-2">
           {Array.from({ length: book.rating ?? 0 }).map((_, index) => (
             <StarIcon

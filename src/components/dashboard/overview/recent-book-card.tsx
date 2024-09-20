@@ -12,9 +12,13 @@ import { StarIcon } from 'lucide-react';
 
 export default function RecentBookCard({ book }: { book: SelectBook }) {
   return (
-    <Card key={book.title}>
+    <Card key={book.id}>
       <CardHeader>
-        <CardTitle>{book.title}</CardTitle>
+        <CardTitle>
+          {book.title.length > 30
+            ? book.title.substring(0, 30).concat('...')
+            : book.title}
+        </CardTitle>
         <CardDescription>{book.genre}</CardDescription>
       </CardHeader>
       <CardContent>

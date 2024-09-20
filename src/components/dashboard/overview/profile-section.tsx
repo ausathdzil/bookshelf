@@ -32,7 +32,9 @@ export default function ProfileSection({
                     className="hover:underline"
                     href={`/dashboard/books/${book.id}`}
                   >
-                    {book.title}
+                    {book.title.length > 20
+                      ? book.title.substring(0, 20).concat('...')
+                      : book.title}
                   </Link>
                 </li>
               ))}
