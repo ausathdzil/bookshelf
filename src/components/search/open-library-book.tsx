@@ -1,7 +1,7 @@
+import AddBookButton from '@/components/search/add-book-button';
 import { fetchBookByISBN } from '@/lib/data';
 import Image from 'next/image';
 import Link from 'next/link';
-import AddBookButton from './add-book-button';
 
 export default async function OpenLibraryBook({ query }: { query: string }) {
   const book = await fetchBookByISBN(query);

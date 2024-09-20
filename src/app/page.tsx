@@ -1,3 +1,6 @@
+'use client';
+
+import { useUser } from '@/lib/user-provider';
 import { LibraryBig } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -5,6 +8,8 @@ import dashboardExample from '../../public/dashboard-example.png';
 import mobileDashboardExample from '../../public/mobile-dashboard-example.png';
 
 export default function Home() {
+  const user = useUser();
+
   return (
     <>
       <section className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
@@ -37,12 +42,21 @@ export default function Home() {
             fill
           />
         </div>
-        <p className="text-base sm:text-center">
-          <span className="text-blue-500 hover:underline">
-            <Link href="/signin">Sign in</Link>
-          </span>{' '}
-          to get started.
-        </p>
+        {user ? (
+          <p className="text-base sm:text-center">
+            <span className="text-blue-500 hover:underline">
+              <Link href="/dashboard">Go to your dashboard</Link>
+            </span>{' '}
+            to get started.
+          </p>
+        ) : (
+          <p className="text-base sm:text-center">
+            <span className="text-blue-500 hover:underline">
+              <Link href="/signin">Sign in</Link>
+            </span>{' '}
+            to get started.
+          </p>
+        )}
       </section>
     </>
   );

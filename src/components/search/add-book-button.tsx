@@ -1,3 +1,5 @@
+'use client';
+
 import CreateBookForm from '@/components/forms/create-book-form';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,8 +11,15 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { OpenLibraryBook } from '@/lib/data';
+import { useUser } from '@/lib/user-provider';
 
 export default function AddBookButton({ book }: { book: OpenLibraryBook }) {
+  const user = useUser();
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
