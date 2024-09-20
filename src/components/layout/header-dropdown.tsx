@@ -14,6 +14,7 @@ import {
 import { useUser } from '@/lib/user-provider';
 import Link from 'next/link';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { Home, LogOut } from 'lucide-react';
 
 export default function HeaderDropdown() {
   const user = useUser();
@@ -47,13 +48,22 @@ export default function HeaderDropdown() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="hover:cursor-pointer">
-            <Link href="/dashboard">Dashboard</Link>
+            <Link
+              href="/dashboard"
+              className="flex items-center"
+            >
+              <Home size={16} />
+              <span className="ml-2">Dashboard</span>
+            </Link>
           </DropdownMenuItem>
           <DialogTrigger
-            className="text-red-500 hover:cursor-pointer"
+            className="hover:cursor-pointer"
             asChild
           >
-            <DropdownMenuItem>Sign Out</DropdownMenuItem>
+            <DropdownMenuItem className="flex items-center">
+              <LogOut size={16} />
+              <span className="ml-2">Sign Out</span>
+            </DropdownMenuItem>
           </DialogTrigger>
         </DropdownMenuContent>
       </DropdownMenu>
